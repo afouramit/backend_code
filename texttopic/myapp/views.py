@@ -406,14 +406,14 @@ def rand_ques_generator(request):
         question_number  = int(request.META.get('HTTP_A'))
         question_type    = request.META.get('HTTP_TYPE')
 
-        if question_number and question_type:
+        if question_number>0 and question_number<11 and question_type:
              
             dict_data = question(question_type, question_number )
         
             response_obj = ResponseClass(200, "Add Successful",dict_data)
             return JsonResponse(response_obj.__dict__, status=200)
         else:
-            response_obj = ResponseClass(400, "question and question type cannot be empty")
+            response_obj = ResponseClass(400, "question and question type cannot be empty,or zero, or greater than 10")
             return JsonResponse(response_obj.__dict__, status=400)
 
     except KeyError as e:
@@ -429,7 +429,7 @@ def rand_ques_generator(request):
 def counting_pictures(request):
     try:
         num_of_ques = int(request.META.get('HTTP_NUMBERS'))
-        if num_of_ques:
+        if num_of_ques>0 and num_of_ques<11:
             object_list =["Fish","Ball","Finger","Pen","Pencil","Rubber"]
             dict_data = [0]*num_of_ques
             
@@ -449,7 +449,7 @@ def counting_pictures(request):
             response_obj = ResponseClass(200, "Add Successful",dict_data)
             return JsonResponse(response_obj.__dict__, status=200)
         else:
-            response_obj = ResponseClass(400, "Number cannot be empty")
+            response_obj = ResponseClass(400, "input cannot be zero, or greater than 10")
             return JsonResponse(response_obj.__dict__, status=400)
 
     except KeyError as e:
@@ -464,7 +464,7 @@ def counting_pictures(request):
 def fraction_question_generator(request):
     try:
         num_of_ques = int(request.META.get('HTTP_NUMBERS'))
-        if num_of_ques:
+        if num_of_ques > 0 and num_of_ques <11:
             
             dict_data = {}
             
@@ -475,11 +475,11 @@ def fraction_question_generator(request):
             response_obj = ResponseClass(200, "Add Successful",dict_data)
             return JsonResponse(response_obj.__dict__, status=200)
         else:
-            response_obj = ResponseClass(400, "a and b cannot be empty")
+            response_obj = ResponseClass(400, "input cannot be zero, or greater than 10")
             return JsonResponse(response_obj.__dict__, status=400)
 
     except KeyError as e:
-            response_obj = ResponseClass(400, "no field called a nad b")
+            response_obj = ResponseClass(400, "no field specified")
             return JsonResponse(response_obj.__dict__, status=400) 
 
 ##################################### Fraction_Section_end ##############################
