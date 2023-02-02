@@ -122,6 +122,30 @@ def random_question_generator_divide():
     #print(quotient)
     return text, quotient
 
+def lcm_two_numbers(num1,num2):
+    storing_output_arr = []
+    increment_value = 2
+
+    answer_set=[]
+    answer = 1
+    while (num1 != 1 and num2 >1) or (num1 == 1 and num2 >1) or  (num2 != 1 and num1 >1) or (num2 == 1 and num1 >1):
+        if num1 % increment_value == 0 or num2 % increment_value == 0:
+            storing_output_arr.append([increment_value,num1,num2])
+            answer *= increment_value
+            answer_set.append(increment_value)
+            if num1 % increment_value==0:
+                num1 = num1 // increment_value
+            else:
+                num1 = num1
+            if num2 % increment_value==0:
+                num2 = num2 // increment_value
+            else:
+                num2 = num2    
+        else:
+            increment_value += 1
+
+    return storing_output_arr,answer,answer_set    
+
 def question(question_type, question_number ):
     #print("Hey")
     if question_type == "addition":
@@ -299,8 +323,8 @@ def convert_pictorial_text_q_to_picture_q(request):
 @api_view(['GET'])
 def addition_by_get(request):
     try:
-        a =int( request.META.get('HTTP_A'))
-        b =int( request.META.get('HTTP_B'))
+        a =request.META.get('HTTP_A')
+        b =request.META.get('HTTP_B')
         # question = request.data['question']
         if a and b:
             c = a+b
@@ -313,6 +337,7 @@ def addition_by_get(request):
     except KeyError as e:
             response_obj = ResponseClass(400, "no field called a nad b")
             return JsonResponse(response_obj.__dict__, status=400)
+           
 
 # @api_view(['POST'])
 # def addition_by_post(request):
@@ -370,12 +395,12 @@ def addition_by_post(request):
 ################################# Practice-ends #########################################
 
 ################################## Random_Number_Generator_Section ######################
-@api_view(['POST'])
+@api_view(['GET'])
 def rand_ques_generator(request):
     try:
         
-        question_number  = int(request.data["number_of_questions"])
-        question_type    = request.data["operation_type"]
+        question_number  = int(request.META.get('HTTP_A'))
+        question_type    = request.META.get('HTTP_TYPE')
 
         if question_number and question_type:
              
@@ -384,11 +409,11 @@ def rand_ques_generator(request):
             response_obj = ResponseClass(200, "Add Successful",dict_data)
             return JsonResponse(response_obj.__dict__, status=200)
         else:
-            response_obj = ResponseClass(400, "a and b cannot be empty")
+            response_obj = ResponseClass(400, "question and question type cannot be empty")
             return JsonResponse(response_obj.__dict__, status=400)
 
     except KeyError as e:
-            response_obj = ResponseClass(400, "no field called a nad b")
+            response_obj = ResponseClass(400, "no field called question and question_type")
             return JsonResponse(response_obj.__dict__, status=400)   
 
 
@@ -396,13 +421,13 @@ def rand_ques_generator(request):
 
 
 ###################################### Count_pictures_and_add section ####################
-@api_view(['POST'])
-def count_pictures_and_add(request):
+@api_view(['GET'])
+def counting_pictures(request):
     try:
-        num_of_ques = int(request.data["num_of_questions"])
+        num_of_ques = int(request.META.get('HTTP_NUMBERS'))
         if num_of_ques:
             object_list =["Fish","Ball","Finger","Pen","Pencil","Rubber"]
-            dict_data = {}
+            dict_data = [0]*num_of_ques
             
             for i in range(num_of_ques):
                 num_01 = random.randint(1,10)
@@ -412,29 +437,29 @@ def count_pictures_and_add(request):
                 object = object_list[object_num]
                 ans = num_01 + num_02
                 dicct = {
-                    "obj_01":{num_01:object},
-                    "obj_02":{num_02:object},
-                    "answer":{ans:object}
+                    "object":object,
+                    "count":[num_01,num_02],
+                    "answer":ans
                 }
                 dict_data[i] = dicct
             response_obj = ResponseClass(200, "Add Successful",dict_data)
             return JsonResponse(response_obj.__dict__, status=200)
         else:
-            response_obj = ResponseClass(400, "a and b cannot be empty")
+            response_obj = ResponseClass(400, "Number cannot be empty")
             return JsonResponse(response_obj.__dict__, status=400)
 
     except KeyError as e:
-            response_obj = ResponseClass(400, "no field called a nad b")
+            response_obj = ResponseClass(400, "no field for number")
             return JsonResponse(response_obj.__dict__, status=400)   
 
 ################################ Count_pictures_and_add_section end ######################
 
 #################################### Fraction_Section ###################################
 
-@api_view(['POST'])
+@api_view(['GET'])
 def fraction_question_generator(request):
     try:
-        num_of_ques = int(request.data["num_of_questions"])
+        num_of_ques = int(request.META.get('HTTP_NUMBERS'))
         if num_of_ques:
             
             dict_data = {}
@@ -454,3 +479,60 @@ def fraction_question_generator(request):
             return JsonResponse(response_obj.__dict__, status=400) 
 
 ##################################### Fraction_Section_end ##############################
+
+############################### API for generating qustions objects,numbers and operations #
+@api_view(['GET'])
+def obtaining_objects(request):
+    try:
+        question = str(request.META.get('HTTP_QUESTION'))
+    
+        if question:
+            if text_to_picture.validate_question(question):
+                operation = text_to_picture.find_operation(question)
+                numbers =  text_to_picture.find_numbers(question)
+                subjects =  text_to_picture.find_subject(question)
+                dicct = {
+                    "Question":question,
+                    "Operation":operation,
+                    "numbers":numbers,
+                    "subject":subjects
+                }
+                response_obj = ResponseClass(200, "Add Successful",dicct)
+                return JsonResponse(response_obj.__dict__, status=200)
+            else:
+                response_obj = ResponseClass(206, "Text is not proper")
+                return JsonResponse(response_obj.__dict__, status=206)
+        else:
+            response_obj = ResponseClass(400, "Question can not be empty")
+            return JsonResponse(response_obj.__dict__, status=400)
+
+    except KeyError as e:
+            response_obj = ResponseClass(400, "no field called question")
+            return JsonResponse(response_obj.__dict__, status=400)
+
+##################################### LCM ###########################################
+@api_view(['GET'])
+def LCM_two_numbers(request):
+    try:
+        a =int(request.META.get('HTTP_A'))
+        b =int(request.META.get('HTTP_B'))
+        # question = request.data['question']
+        if a and b:
+            list_output,answer,answer_set = lcm_two_numbers(a,b)
+            c = [
+                {
+                    "Vertical_Arrangement":list_output,
+                    "Answer_Set":answer_set,
+                    "Answer":answer
+                }
+            ]  
+            response_obj = ResponseClass(200, "Add Successful",c)
+            return JsonResponse(response_obj.__dict__, status=200)
+        else:
+            response_obj = ResponseClass(400, "a and b cannot be empty")
+            return JsonResponse(response_obj.__dict__, status=400)
+
+    except KeyError as e:
+            response_obj = ResponseClass(400, "no field called a nad b")
+            return JsonResponse(response_obj.__dict__, status=400)
+                       

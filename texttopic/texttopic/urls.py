@@ -22,9 +22,11 @@ urlpatterns = [
     path('get_picture_2/', views.convert_pictorial_text_q_to_picture_q),
     path('get_addition/', views.addition_by_get),
     path('post_addition/', views.addition_by_post),
-    path('count_pictures_and_add/', views.count_pictures_and_add),
+    path('counting_pictures/', views.counting_pictures),
     path('random_operations_ques_generator/', views.rand_ques_generator),
     path('fraction_question_generator/', views.fraction_question_generator),
-    
+    path('obtaining_objects/', views.obtaining_objects),
+    path('LCM_two_numbers/', views.LCM_two_numbers),
+
 
 ]
