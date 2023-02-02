@@ -8,6 +8,8 @@ from functools import reduce
 import spacy
 import re
 nlp = spacy.load("en_core_web_sm")
+import copy
+import ast
 
 ############################################## Fahads Code ###########################
 
@@ -122,29 +124,31 @@ def random_question_generator_divide():
     #print(quotient)
     return text, quotient
 
-def lcm_two_numbers(num1,num2):
+def lcm_numbers(nums):
     storing_output_arr = []
     increment_value = 2
+    nums_base_copy = copy.deepcopy(nums)
 
     answer_set=[]
     answer = 1
-    while (num1 != 1 and num2 >1) or (num1 == 1 and num2 >1) or  (num2 != 1 and num1 >1) or (num2 == 1 and num1 >1):
-        if num1 % increment_value == 0 or num2 % increment_value == 0:
-            storing_output_arr.append([increment_value,num1,num2])
+
+    while(sum(nums)>len(nums)):
+        nums_copy = copy.deepcopy(nums)
+        value = [ True if i % increment_value == 0 else False for i in nums ]
+        if True in value:
+            storing_output_arr.append((increment_value,nums_copy))
             answer *= increment_value
             answer_set.append(increment_value)
-            if num1 % increment_value==0:
-                num1 = num1 // increment_value
-            else:
-                num1 = num1
-            if num2 % increment_value==0:
-                num2 = num2 // increment_value
-            else:
-                num2 = num2    
+            for i in range(len(nums)):
+                if nums[i] % increment_value == 0:
+                    nums[i] = nums[i] // increment_value  
+                else:
+                    nums[i] = nums[i]      
+
         else:
             increment_value += 1
 
-    return storing_output_arr,answer,answer_set    
+    return nums_base_copy,storing_output_arr,answer_set,answer     
 
 def question(question_type, question_number ):
     #print("Hey")
@@ -512,27 +516,31 @@ def obtaining_objects(request):
 
 ##################################### LCM ###########################################
 @api_view(['GET'])
-def LCM_two_numbers(request):
+def LCM_numbers(request):
     try:
-        a =int(request.META.get('HTTP_A'))
-        b =int(request.META.get('HTTP_B'))
-        # question = request.data['question']
-        if a and b:
-            list_output,answer,answer_set = lcm_two_numbers(a,b)
+        list_a ="".join(request.META.get('HTTP_LIST'))
+
+        
+        integer_list = ast.literal_eval(list_a)
+        
+        
+        if len(integer_list)>1 and len(integer_list)<5:
+            nums_base_copy,storing_output_arr,answer_set,answer  = lcm_numbers(integer_list)
             c = [
-                {
-                    "Vertical_Arrangement":list_output,
+                {   "Passed_List":nums_base_copy,
+                    "Vertical_Arrangement":storing_output_arr,
                     "Answer_Set":answer_set,
                     "Answer":answer
                 }
-            ]  
+            ] 
+            
             response_obj = ResponseClass(200, "Add Successful",c)
             return JsonResponse(response_obj.__dict__, status=200)
         else:
-            response_obj = ResponseClass(400, "a and b cannot be empty")
+            response_obj = ResponseClass(400, "list cannot be empty, pass two to four numbers list")
             return JsonResponse(response_obj.__dict__, status=400)
 
     except KeyError as e:
-            response_obj = ResponseClass(400, "no field called a nad b")
+            response_obj = ResponseClass(400, "no field called list")
             return JsonResponse(response_obj.__dict__, status=400)
                        

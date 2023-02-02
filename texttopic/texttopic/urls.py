@@ -26,7 +26,7 @@ urlpatterns = [
     path('random_operations_ques_generator/', views.rand_ques_generator),
     path('fraction_question_generator/', views.fraction_question_generator),
     path('obtaining_objects/', views.obtaining_objects),
-    path('LCM_two_numbers/', views.LCM_two_numbers),
+    path('LCM_numbers/', views.LCM_numbers),
 
 
 ]
