@@ -27,6 +27,11 @@ urlpatterns = [
     path('fraction_question_generator/', views.fraction_question_generator),
     path('obtaining_objects/', views.obtaining_objects),
     path('LCM_numbers/', views.LCM_numbers),
-
+    path('LCM_numbers/', views.LCM_numbers),
+    path('identifying_shapes/', views.identifying_shapes),
+    path('measuring_angles/', views.measure_angle),
+    path('identifying_angles/', views.identifying_angle),
+    path('displaying_angles/', views.display_angle),
+    path('naming_figures/', views.naming_fig),
 
 ]

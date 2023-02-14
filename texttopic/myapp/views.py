@@ -10,6 +10,7 @@ import re
 nlp = spacy.load("en_core_web_sm")
 import copy
 import ast
+from random import choice
 
 ############################################## Fahads Code ###########################
 
@@ -226,12 +227,15 @@ def numbers_and_object_extracor(question):
         else:
             pass  
 
-    if len(num_list) == len(object_list):
-        for i in range(len(num_list)):
-            dicts[num_list[i]] = object_list[i]
-    else:
-        for i in range(len(num_list)):
-            dicts[num_list[i]] = object_list[0]
+    dicts['numbers'] = num_list
+    dicts['objects'] = object_list    
+
+    # if len(num_list) == len(object_list):
+    #     for i in range(len(num_list)):
+    #         dicts[num_list[i]] = object_list[i]
+    # else:
+    #     for i in range(len(num_list)):
+    #         dicts[num_list[i]] = object_list[0]
 
 
     return dicts    
@@ -283,6 +287,285 @@ def fraction_question( ):
     }
     return output_dict
 ################################ Fraction_Section_Functions_end ################################
+
+################################# Sample_question_mahesh_sir #################################
+
+################## Identifying shapes############################
+def identify_the_shape(number):
+
+    circle_obj = 0
+    square_object = 0
+    triangle_object = 0
+
+    output_object_list = []
+
+    object_list = ["circle","triangle","square"]
+
+    circle = [{"object":"tire","url":"https://i.ibb.co/594FR44/tire.png"},{"object":"plate","url":"https://i.ibb.co/3mzn20R/plate.png"}]
+
+    triangle = [{"object":"hanger","url":"https://i.ibb.co/0FKqYRM/hanger.png"},{"object":"green_cap","url":"https://i.ibb.co/hLj6tyy/green-cap.png"},{"object":"blue_cap","url":"https://i.ibb.co/y5hyKRX/blue-cap.png"}]
+
+    square = [{"object":"mobile","url":"https://i.ibb.co/rpT2J3N/mobile.png"},{"object":"window","url":"https://i.ibb.co/Htp0dWx/window.png"},{"object":"book","url":"https://i.ibb.co/W09pRjn/book.png"}]
+
+    for i in range(number):
+        rand_num = random.randint(1,3)
+        if rand_num == 1:
+            circle_obj += 1
+            rand_num =  random.randint(0,1)
+            output_object_list.append(circle[rand_num])
+        elif rand_num == 2:
+            triangle_object += 1
+            rand_num =  random.randint(0,2)
+            output_object_list.append(triangle[rand_num])
+        else:
+            square_object += 1
+            rand_num =  random.randint(0,2)
+            output_object_list.append(square[rand_num])
+
+    output = {"objects":output_object_list,"answer":{"circle":circle_obj,"square":square_object,"triangle":triangle_object}}        
+
+    return output  
+
+@api_view(['GET'])
+def identifying_shapes(request):
+    try:
+        num_of_ques = int(request.META.get('HTTP_NUMBERS'))
+        if num_of_ques > 0 :
+            
+            dict_data = identify_the_shape(num_of_ques)
+            
+            
+
+            response_obj = ResponseClass(200, "Add Successful",dict_data)
+            return JsonResponse(response_obj.__dict__, status=200)
+        else:
+            response_obj = ResponseClass(400, "input cannot be zero")
+            return JsonResponse(response_obj.__dict__, status=400)
+
+    except KeyError as e:
+            response_obj = ResponseClass(400, "no field specified")
+            return JsonResponse(response_obj.__dict__, status=400) 
+######################### Identifying Shapes ######################
+
+######################### measuring angles ########################
+def measuring_angle(number):
+    question_list = []
+
+    for i in range(number):
+        angle_value = random.randrange(5,170,5)
+        option_list = [
+                        angle_value,
+                        angle_value + 5,
+                        angle_value - 5,
+                        angle_value + 10
+                      ]
+        random.shuffle(option_list)
+        data = {
+                    "angle":angle_value,
+                    "options":option_list,
+               }
+        question_list.append(data)
+
+    return question_list    
+
+@api_view(['GET'])
+def measure_angle(request):
+    try:
+        num_of_ques = int(request.META.get('HTTP_NUMBERS'))
+        if num_of_ques > 0 :
+            
+            dict_data = measuring_angle(num_of_ques)
+            response_obj = ResponseClass(200, "Add Successful",dict_data)
+            return JsonResponse(response_obj.__dict__, status=200)
+        else:
+            response_obj = ResponseClass(400, "input cannot be zero")
+            return JsonResponse(response_obj.__dict__, status=400)
+
+    except KeyError as e:
+            response_obj = ResponseClass(400, "no field specified")
+            return JsonResponse(response_obj.__dict__, status=400) 
+
+######################### measuring angles ########################
+def displaying_angle(number):
+    question_list = []
+
+    for i in range(number):
+        angle_value = choice([i for i in range(5,75,5) if i not in [45]])
+        option_list = [
+                        angle_value,
+                        180 - angle_value ,
+                        "r "+str(180 - angle_value) ,
+                        90 - angle_value
+                      ]
+        random.shuffle(option_list)
+        data = {
+                    "angle":angle_value,
+                    "options":option_list,
+               }
+        question_list.append(data)
+
+    return question_list  
+
+@api_view(['GET'])
+def display_angle(request):
+    try:
+        num_of_ques = int(request.META.get('HTTP_NUMBERS'))
+        if num_of_ques > 0 :
+            
+            dict_data = displaying_angle(num_of_ques)
+            response_obj = ResponseClass(200, "Add Successful",dict_data)
+            return JsonResponse(response_obj.__dict__, status=200)
+        else:
+            response_obj = ResponseClass(400, "input cannot be zero")
+            return JsonResponse(response_obj.__dict__, status=400)
+
+    except KeyError as e:
+            response_obj = ResponseClass(400, "no field specified")
+            return JsonResponse(response_obj.__dict__, status=400) 
+######################### Observing angle #########################
+
+######################### Observing angle #########################
+
+######################### Identifying Angles ########################
+def angle_problem(number):
+    question_list = []
+
+    for i in range(number):
+        obj = ["an acute angle","a complete angle","a obtuse angle","a reflex angle","a right angle","a straight angle",]
+        object_list = [
+    {0:{"acute_30":"https://i.ibb.co/NCc4yXm/acute-30.png"},
+     1:{"acute_45":"https://i.ibb.co/W0kvMc7/acute-45.png"},
+     2:{"acute_60":"https://i.ibb.co/V9JRyFg/acute-60.png"}
+     },
+
+    {0:{"complete_angle_01":"https://i.ibb.co/fMqscGL/complete-angle-01.png"},
+     1:{"complete_angle_02":"https://i.ibb.co/f825TVC/complete-angle-02.png"},
+     2:{"complete_angle_03":"https://i.ibb.co/DbDsJ0q/complete-angle-03.png"}
+     },
+
+    {0:{"obtuse_106":"https://i.ibb.co/pnkX6Sw/obtuse-106.png"},
+     1:{"obtuse_110":"https://i.ibb.co/sjp7nnj/obtuse-110.png"},
+     2:{"obtuse_120":"https://i.ibb.co/TtQ73kX/obtuse-120.png"}
+     },
+     
+     {0:{"reflex_220":"https://i.ibb.co/0DT0tNr/reflex-220.png"},
+     1:{"reflex_225":"https://i.ibb.co/tPSZy0d/reflex-225.png"},
+     2:{"reflex_320":"https://i.ibb.co/gFxnxFZ/reflex-320.png"}
+     },
+
+    {0:{"rignt_angle_01":"https://i.ibb.co/TBKsBt1/rignt-angle-01.png"},
+     1:{"rignt_angle_02":"https://i.ibb.co/Pr2tShZ/rignt-angle-02.png"},
+     2:{"rignt_angle_03":"https://i.ibb.co/YTHNb6Q/rignt-angle-03.png"}
+     },
+
+    {0:{"straight_01":"https://i.ibb.co/0DscpnF/straight-01.png"},
+     1:{"straight_02":"https://i.ibb.co/VBXnCZC/straight-02.png"},
+     2:{"straight_03":"https://i.ibb.co/L6n9xqB/straight-03.png"}
+     },
+    ]
+        rand_obj = random.randint(0,len(obj)-1)
+        ques = "Which of the following is "+ obj[rand_obj]
+        option = []
+        answer = []
+        qus_num = random.randint(0,2)
+        for i in range(4):
+            if i == 0:
+                option.append(object_list[rand_obj][qus_num])
+                answer.append(object_list[rand_obj][qus_num])
+            else: 
+                obj_selection = random.randint(0,len(obj)-1)
+                obj_of_obj_selection = random.randint(0,2)
+
+                if obj_selection == rand_obj:
+                    option.append(object_list[rand_obj][obj_of_obj_selection])
+                    answer.append(object_list[rand_obj][obj_of_obj_selection])
+                else:
+                    option.append(object_list[obj_selection][obj_of_obj_selection])
+
+        random.shuffle(option)
+        qus_dict = {
+            "question":ques,
+            "options":option,
+            "answer":answer
+        }
+        question_list.append(qus_dict)
+    return question_list
+
+@api_view(['GET'])
+def identifying_angle(request):
+    try:
+        num_of_ques = int(request.META.get('HTTP_NUMBERS'))
+        if num_of_ques > 0 :
+            
+            dict_data = angle_problem(num_of_ques)
+            response_obj = ResponseClass(200, "Add Successful",dict_data)
+            return JsonResponse(response_obj.__dict__, status=200)
+        else:
+            response_obj = ResponseClass(400, "input cannot be zero")
+            return JsonResponse(response_obj.__dict__, status=400)
+
+    except KeyError as e:
+            response_obj = ResponseClass(400, "no field specified")
+            return JsonResponse(response_obj.__dict__, status=400) 
+
+######################### Idntifying Angles #########################
+
+
+######################### Naming Figures ############################
+def naming_figures(numbers):
+    question_list = []
+
+    problem_list = [
+    {
+        "fig":"fig_link_01",
+        "coli_points":['MOT','RON',1],
+        "rays":['OR','OM','OS','OT','ON','OP',0],
+        "line_seg":['OP','ON','OT','OS','OR','OM','MT','RN',1],
+        "lines":['MT','RN',1]
+    },
+    {
+        "fig":"fig_link_02",
+        "coli_points":['XOA',1],
+        "rays":['OB','OA','OE','OD','OX','OC',0],
+        "line_seg":['OB','OA','OE','OD','OX','OC','XA',1],
+        "lines":['XA',1]
+    },
+    {
+        "fig":"fig_link_03",
+        "coli_points":['BOD','AOC',1],
+        "rays":['OE','OD','OC','OB','OA',0],
+        "line_seg":['OE','OD','OC','OB','OA','BD','AC',1],
+        "lines":['BD','AC',1]
+    }]
+
+    for num in range(numbers):
+        random_question = random.randint(0,len(problem_list)-1)
+        question_list.append(problem_list[random_question])
+
+    return question_list    
+
+@api_view(['GET'])
+def naming_fig(request):
+    try:
+        num_of_ques = int(request.META.get('HTTP_NUMBERS'))
+        if num_of_ques > 0 :
+            
+            dict_data = naming_figures(num_of_ques)
+            response_obj = ResponseClass(200, "Add Successful",dict_data)
+            return JsonResponse(response_obj.__dict__, status=200)
+        else:
+            response_obj = ResponseClass(400, "input cannot be zero")
+            return JsonResponse(response_obj.__dict__, status=400)
+
+    except KeyError as e:
+            response_obj = ResponseClass(400, "no field specified")
+            return JsonResponse(response_obj.__dict__, status=400)
+
+######################### Naming Figures-end ########################
+
+
+################################# Sample_question_mahesh_sir #################################
+
 
 
 @api_view(['GET'])
@@ -499,7 +782,7 @@ def obtaining_objects(request):
                     "Question":question,
                     "Operation":operation,
                     "numbers":numbers,
-                    "subject":subjects
+                    "objects":subjects
                 }
                 response_obj = ResponseClass(200, "Add Successful",dicct)
                 return JsonResponse(response_obj.__dict__, status=200)
