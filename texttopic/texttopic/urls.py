@@ -24,6 +24,7 @@ urlpatterns = [
     path('post_addition/', views.addition_by_post),
     path('counting_pictures/', views.counting_pictures),
     path('random_operations_ques_generator/', views.rand_ques_generator),
+    path('random_operations_ques_generator_with_exp/', views.rand_ques_generator_with_text_explanation),
     path('fraction_question_generator/', views.fraction_question_generator),
     path('obtaining_objects/', views.obtaining_objects),
     path('LCM_numbers/', views.LCM_numbers),
@@ -33,5 +34,6 @@ urlpatterns = [
     path('identifying_angles/', views.identifying_angle),
     path('displaying_angles/', views.display_angle),
     path('naming_figures/', views.naming_fig),
+    path('naming_figures_single_question/', views.naming_fig_single_ques),
 
 ]

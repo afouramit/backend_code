@@ -11,6 +11,7 @@ nlp = spacy.load("en_core_web_sm")
 import copy
 import ast
 from random import choice
+from nltk.stem import WordNetLemmatizer
 
 ############################################## Fahads Code ###########################
 
@@ -18,6 +19,84 @@ Add_question = "Anand has 27 stickers. He bought 5 more. How many stickers does 
 Sub_question = "Anand has 27 stickers. He gives 5 stickers to Sita. How many stickers does Anand left?"
 Multi_question = "Anand has 27 stickers. He bought each of 5 rupees. What is the total cost?"
 Div_question = "Anand has 9 stickers. He distrubted among 3 children. How much stickers does each child got?"
+
+def text_explanation(answer,question_type,obj_extractor):
+    if question_type == "addition":
+        object = obj_extractor["objects"][0]
+        num1 = obj_extractor["numbers"][0]
+        num2 = obj_extractor["numbers"][1]
+        numbers_in_words = ""
+        number_word_list = ["one","two","three","four","five","six","seven","eight","nine","ten","eleven","twelve","thirteen","fourteen","fifteen","sixteen","seventeen","eighteen","nineteen","twenty"]
+        for i in range(answer):
+            numbers_in_words += " "+number_word_list[i]+","
+        text = f"To find the answer for this, we need to combine the {object} from both plates together. This is called addition and it is symbolically represented by + sign. Addition is nothing but bringing the things together. To find the total number of {object} in both the plates, we will combine them and put it in the third plate. Now let us count these combined {object} which are kept in the third plate.{numbers_in_words} So the total number of {object} are {answer} which is the answer.  "
+        text_exp = {
+            0 : {
+                  "commentary" :"Visualizing the above question, we shall have following scenario",
+                  "call_to_action" :f"display 3 mats, such that we have {num1} {object} on first mat, {num2} {object} on second mat, and third mat is empty."
+                },
+            1 : {
+                  "commentary" :f"To find the answer for this, we need to combine the {object} from both mats together. This is called addition and it is symbolically represented by + sign.",
+                  "call_to_action" :f"Display '+' sign between mat1 and mat2"
+                },
+            2 : {
+                  "commentary" :f"Addition is nothing but bringing the things together. To find the total number of {object} on both mats, we will combine them and put it on the third mat.",
+                  "call_to_action" :f"move the objects from mat1 and mat2 to mat3"
+                }, 
+            3 : {
+                  "commentary" :f"Now let us count these combined {object} which are kept on the third mat.{numbers_in_words}.",
+                  "call_to_action" :f"highlight the object along with incrementing numbers, one-by-one"
+                }, 
+            4 : {
+                  "commentary" :f"So the total number of {object} are {answer} which is the answer.",
+                  "call_to_action" :f"encircle the objects on mat3, and display the number {answer}"
+                },                
+        }
+    if question_type == "subtraction":
+        object = obj_extractor["objects"][0]
+        num_01 = obj_extractor['numbers'][0]
+        num_02 = obj_extractor['numbers'][1]
+        lemmatizer = WordNetLemmatizer()
+        single_obj = lemmatizer.lemmatize(object)
+        numbers_in_words = ""
+        numbers_to_be_sub = ""
+        number_word_list = ["one","two","three","four","five","six","seven","eight","nine","ten","eleven","twelve","thirteen","fourteen","fifteen","sixteen","seventeen","eighteen","nineteen","twenty"]
+        for i in range(answer):
+            numbers_in_words += " "+number_word_list[i]+","
+        for i in range(int(num_02)):
+            numbers_to_be_sub += " "+number_word_list[i]+","    
+        text = f"Of the given quantity, when something is  given away, this represents reduction in the existing quantity, is called subtraction and is represented by - sign. We see all {num_01} {object} in the plate as shown. {num_02} {object} were given from this. We will scratch one {single_obj} for every {single_obj} being given away. Now the unscratched {object} are remaining. Let us count these remaining {object}.{numbers_in_words} This count will represent {num_01} minus {num_02} gives {answer} . So after giving away {num_02} {object} from {num_01} {object} what we get is {answer} {object}, which is the answer."
+        text_exp ={
+            0 : {
+                    "commentary" : "Of the given quantity, when something is given away, represents, reduction in existing quantity, is called subtraction, and is represented by minus sign.",
+                    "call_to_action" : "Only the question will be show on the screen, and at the end of the commentary,'-' sign will be displayed."
+                },
+            1 : {
+                    "commentary" : f"We see all {num_01} {object} on the mat as shown.",
+                    "call_to_action" :f"A mat is shown with {num_01} {object} on it."
+                },  
+            2 : {
+                    "commentary" : f"We will scratch one {object} for every {object} being given. Since {num_02} {object} were given, we will scratch {num_02} {object} from {num_01} {object}.",
+                    "call_to_action" : f"Show {num_02} {object}, to be scratched, beside the mat."
+                },        
+            3 : {
+                    "commentary" : f"We will start scratching and counting {object} one-by-one. Lets start, {numbers_to_be_sub}.",
+                    "call_to_action" : f"Start scratching {num_02} {object} from overall {object} on mat1. And display number from 1 till {num_02}, everytime we scratch a {object}."
+                }, 
+            4 : {
+                    "commentary" : f"Now the unstratched {object} forms the answer to the question.",
+                    "call_to_action" : f"mat1, shows, scratched and unscratched {object}."
+                },
+            5 : {
+                    "commentary" : f"Let us count these remaining {object}.{numbers_in_words}",
+                    "call_to_action" : f"Visual should show the count ."
+                }, 
+            6 : {
+                    "commentary" : f"So the answer after subtrcting {num_02} {object} from {num_01} {object} we get {answer} {object}.",
+                    "call_to_action" : f"Display {answer} on the screen ."
+                },                 
+        }    
+    return text_exp
 
 
 def subs():
@@ -152,6 +231,58 @@ def lcm_numbers(nums):
     return nums_base_copy,storing_output_arr,answer_set,answer     
 
 def question(question_type, question_number ):
+    
+    if question_type == "addition":
+        lst_add = []
+        for i  in range(question_number):
+            question_add = {}
+            text, addition = random_question_generator_add()
+            obj_extractor = numbers_and_object_extracor(text)
+            question_add.update({'Question':text})
+            question_add.update({'Answer':addition})
+            
+            question_add.update({'Objects':obj_extractor})
+            lst_add.append(question_add)
+        return lst_add
+    elif question_type == "multiplication":
+        lst_multi = []
+        for i  in range(question_number):
+            question_multi = {}
+            text, multiplication = random_question_generator_multi()
+            question_multi.update({'Question':text})
+            question_multi.update({'Answer':multiplication})
+            obj_extractor = numbers_and_object_extracor(text)
+            question_multi.update({'Objects':obj_extractor})
+            lst_multi.append(question_multi)
+           
+        return lst_multi
+    elif question_type == "subtraction":
+        lst_sub = []
+        for i  in range(question_number):
+            question_sub = {}
+            text, difference = random_question_generator_subtract()
+            question_sub.update({'Question':text})
+            question_sub.update({'Answer':difference})
+            obj_extractor = numbers_and_object_extracor(text)
+            question_sub.update({'Objects':obj_extractor})
+            lst_sub.append(question_sub)
+            
+        return lst_sub
+    elif question_type == "division":
+        lst_div = []
+        for i  in range(question_number):
+            question_div = {}
+            text, quotient = random_question_generator_divide()
+            quotient = int(quotient)
+            question_div.update({'Question':text})
+            question_div.update({'Answer':quotient})
+            obj_extractor = numbers_and_object_extracor(text)
+            question_div.update({'Objects':obj_extractor})
+            lst_div.append(question_div)
+            
+        return lst_div
+
+def question_with_text_exp(question_type, question_number ):
     #print("Hey")
     if question_type == "addition":
         lst_add = []
@@ -161,8 +292,9 @@ def question(question_type, question_number ):
             obj_extractor = numbers_and_object_extracor(text)
             question_add.update({'Question':text})
             question_add.update({'Answer':addition})
-            # obj_extractor = numbers_and_object_extracor(text)
             question_add.update({'Objects':obj_extractor})
+            txt_explanation = text_explanation(addition,question_type,obj_extractor)
+            question_add.update({'Text_Explanation':txt_explanation})
             lst_add.append(question_add)
         return lst_add
     elif question_type == "multiplication":
@@ -186,8 +318,10 @@ def question(question_type, question_number ):
             question_sub.update({'Answer':difference})
             obj_extractor = numbers_and_object_extracor(text)
             question_sub.update({'Objects':obj_extractor})
+            txt_explanation = text_explanation(difference,question_type,obj_extractor)
+            question_sub.update({'Text_Explanation':txt_explanation})
             lst_sub.append(question_sub)
-            #lst_sub.append(random_question_generator_subtract(question_name ))
+            
         return lst_sub
     elif question_type == "division":
         lst_div = []
@@ -203,10 +337,6 @@ def question(question_type, question_number ):
             #lst_div.append(random_question_generator_divide(question_name ))
         #print(lst_div)
         return lst_div
-
-#ans = question("/","10 div 2",15)
-#print(ans)
-
 
 ############################################## Fahads Code-end #######################
 
@@ -229,14 +359,6 @@ def numbers_and_object_extracor(question):
 
     dicts['numbers'] = num_list
     dicts['objects'] = object_list    
-
-    # if len(num_list) == len(object_list):
-    #     for i in range(len(num_list)):
-    #         dicts[num_list[i]] = object_list[i]
-    # else:
-    #     for i in range(len(num_list)):
-    #         dicts[num_list[i]] = object_list[0]
-
 
     return dicts    
 ################################################ number_and_object_extractor-end #######
@@ -301,26 +423,32 @@ def identify_the_shape(number):
 
     object_list = ["circle","triangle","square"]
 
-    circle = [{"object":"tire","url":"https://i.ibb.co/594FR44/tire.png"},{"object":"plate","url":"https://i.ibb.co/3mzn20R/plate.png"}]
+    circle = [{"object":"tire","url":"https://i.ibb.co/594FR44/tire.png","object_type":"circle"},{"object":"plate","url":"https://i.ibb.co/3mzn20R/plate.png","object_type":"circle"}]
 
-    triangle = [{"object":"hanger","url":"https://i.ibb.co/0FKqYRM/hanger.png"},{"object":"green_cap","url":"https://i.ibb.co/hLj6tyy/green-cap.png"},{"object":"blue_cap","url":"https://i.ibb.co/y5hyKRX/blue-cap.png"}]
+    triangle = [{"object":"hanger","url":"https://i.ibb.co/0FKqYRM/hanger.png","object_type":"triangle"},{"object":"green_cap","url":"https://i.ibb.co/hLj6tyy/green-cap.png","object_type":"triangle"},{"object":"blue_cap","url":"https://i.ibb.co/y5hyKRX/blue-cap.png","object_type":"triangle"}]
 
-    square = [{"object":"mobile","url":"https://i.ibb.co/rpT2J3N/mobile.png"},{"object":"window","url":"https://i.ibb.co/Htp0dWx/window.png"},{"object":"book","url":"https://i.ibb.co/W09pRjn/book.png"}]
+    square = [{"object":"mobile","url":"https://i.ibb.co/rpT2J3N/mobile.png","object_type":"square"},{"object":"window","url":"https://i.ibb.co/Htp0dWx/window.png","object_type":"square"},{"object":"book","url":"https://i.ibb.co/W09pRjn/book.png","object_type":"square"}]
 
     for i in range(number):
         rand_num = random.randint(1,3)
         if rand_num == 1:
             circle_obj += 1
             rand_num =  random.randint(0,1)
-            output_object_list.append(circle[rand_num])
+            value = copy.copy(circle[rand_num])
+            value["count"] = circle_obj
+            output_object_list.append(value)
         elif rand_num == 2:
             triangle_object += 1
             rand_num =  random.randint(0,2)
-            output_object_list.append(triangle[rand_num])
+            value = copy.copy(triangle[rand_num])
+            value["count"] = triangle_object
+            output_object_list.append(value)
         else:
             square_object += 1
             rand_num =  random.randint(0,2)
-            output_object_list.append(square[rand_num])
+            value = copy.copy(square[rand_num])
+            value["count"] = square_object
+            output_object_list.append(value)
 
     output = {"objects":output_object_list,"answer":{"circle":circle_obj,"square":square_object,"triangle":triangle_object}}        
 
@@ -517,21 +645,21 @@ def naming_figures(numbers):
 
     problem_list = [
     {
-        "fig":"fig_link_01",
+        "fig":"https://i.ibb.co/qR5QHrZ/fig-01.png",
         "coli_points":['MOT','RON',1],
         "rays":['OR','OM','OS','OT','ON','OP',0],
         "line_seg":['OP','ON','OT','OS','OR','OM','MT','RN',1],
         "lines":['MT','RN',1]
     },
     {
-        "fig":"fig_link_02",
+        "fig":"https://i.ibb.co/02RfmFs/fig-02.png",
         "coli_points":['XOA',1],
         "rays":['OB','OA','OE','OD','OX','OC',0],
         "line_seg":['OB','OA','OE','OD','OX','OC','XA',1],
         "lines":['XA',1]
     },
     {
-        "fig":"fig_link_03",
+        "fig":"https://i.ibb.co/0MHSCZN/fig-03.png",
         "coli_points":['BOD','AOC',1],
         "rays":['OE','OD','OC','OB','OA',0],
         "line_seg":['OE','OD','OC','OB','OA','BD','AC',1],
@@ -560,6 +688,67 @@ def naming_fig(request):
     except KeyError as e:
             response_obj = ResponseClass(400, "no field specified")
             return JsonResponse(response_obj.__dict__, status=400)
+    
+
+def naming_figures_single_question(numbers):
+    question_list = []
+
+    problem_list = [
+    {
+        "fig":"https://i.ibb.co/qR5QHrZ/fig-01.png",
+        "coli_points":{"points":['MOT','RON'],"reverse":True},
+        "rays":{"points":['OR','OM','OS','OT','ON','OP'],"reverse":False},
+        "line_seg":{"points":['OP','ON','OT','OS','OR','OM','MT','RN'],"reverse":True},
+        "lines":{"points":['MT','RN'],"reverse":True}
+    },
+    {
+        "fig":"https://i.ibb.co/02RfmFs/fig-02.png",
+        "coli_points":{"points":['XOA'],"reverse":True},
+        "rays":{"points":['OB','OA','OE','OD','OX','OC'],"reverse":False},
+        "line_seg":{"points":['OB','OA','OE','OD','OX','OC','XA'],"reverse":True},
+        "lines":{"points":['XA'],"reverse":True}
+    },
+    {
+        "fig":"https://i.ibb.co/0MHSCZN/fig-03.png",
+        "coli_points":{"points":['BOD','AOC'],"reverse":True},
+        "rays":{"points":['OE','OD','OC','OB','OA'],"reverse":False},
+        "line_seg":{"points":['OE','OD','OC','OB','OA','BD','AC'],"reverse":True},
+        "lines":{"points":['BD','AC'],"reverse":True}
+    }]
+
+    for num in range(numbers):
+        random_question = random.randint(0,len(problem_list)-1)
+        figure_components = ["Colinear Points", "Rays", "Line Segment","Lines"]
+        key_list = ["coli_points","rays","line_seg","lines"]
+        selected_fig_compnt = random.randint(0,3) 
+        question = "Name "+str(figure_components[selected_fig_compnt])+" from the following figure" 
+        question_dict = {
+            "question": question,
+            "figure": problem_list[random_question]["fig"],
+            key_list[selected_fig_compnt]:problem_list[random_question][key_list[selected_fig_compnt]],
+
+        }
+        question_list.append(question_dict)
+
+    return question_list  
+
+@api_view(['GET'])
+def naming_fig_single_ques(request):
+    try:
+        num_of_ques = int(request.META.get('HTTP_NUMBERS'))
+        if num_of_ques > 0 :
+            
+            dict_data = naming_figures_single_question(num_of_ques)
+            response_obj = ResponseClass(200, "Add Successful",dict_data)
+            return JsonResponse(response_obj.__dict__, status=200)
+        else:
+            response_obj = ResponseClass(400, "input cannot be zero")
+            return JsonResponse(response_obj.__dict__, status=400)
+
+    except KeyError as e:
+            response_obj = ResponseClass(400, "no field specified")
+            return JsonResponse(response_obj.__dict__, status=400)
+          
 
 ######################### Naming Figures-end ########################
 
@@ -706,7 +895,30 @@ def rand_ques_generator(request):
 
 ################################## Random_Number_Generator_Section ends #################
 
+################################## Random_Number_Generator_with_text_explanation_Section ######################
+@api_view(['GET'])
+def rand_ques_generator_with_text_explanation(request):
+    try:
+        
+        question_number  = int(request.META.get('HTTP_A'))
+        question_type    = request.META.get('HTTP_TYPE')
 
+        if question_number>0 and question_number<11 and question_type:
+             
+            dict_data = question_with_text_exp(question_type, question_number )
+        
+            response_obj = ResponseClass(200, "Add Successful",dict_data)
+            return JsonResponse(response_obj.__dict__, status=200)
+        else:
+            response_obj = ResponseClass(400, "question and question type cannot be empty,or zero, or greater than 10")
+            return JsonResponse(response_obj.__dict__, status=400)
+
+    except KeyError as e:
+            response_obj = ResponseClass(400, "no field called question and question_type")
+            return JsonResponse(response_obj.__dict__, status=400)   
+
+
+################################## Random_Number_Generator_with_text_explanation_Section ends #################
 ###################################### Count_pictures_and_add section ####################
 @api_view(['GET'])
 def counting_pictures(request):
@@ -715,7 +927,6 @@ def counting_pictures(request):
         if num_of_ques>0 and num_of_ques<11:
             object_list =["Fish","Ball","Finger","Pen","Pencil","Rubber"]
             dict_data = [0]*num_of_ques
-            
             for i in range(num_of_ques):
                 num_01 = random.randint(1,10)
                 num_02 = random.randint(1,10)
