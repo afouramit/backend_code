@@ -11,7 +11,40 @@ nlp = spacy.load("en_core_web_sm")
 import copy
 import ast
 from random import choice
-from nltk.stem import WordNetLemmatizer
+
+
+############################################# Text-to-Text ###########################
+from googletrans import Translator
+translator = Translator()
+def text_to_text_conversion(text,lang):
+    out = translator.translate(text,dest=lang)
+    return {"converted_text":out.text}
+
+@api_view(['GET'])
+def txt_to_txt(request):
+    try:
+        
+        text  = request.META.get('HTTP_TEXT')
+        lang    = request.META.get('HTTP_LANG')
+
+        if text and lang:
+             
+            dict_data = text_to_text_conversion(text,lang)
+        
+            response_obj = ResponseClass(200, "Add Successful",dict_data)
+            return JsonResponse(response_obj.__dict__, status=200)
+        else:
+            response_obj = ResponseClass(400, "text and lang parameter cannot be null")
+            return JsonResponse(response_obj.__dict__, status=400)
+
+    except KeyError as e:
+            response_obj = ResponseClass(400, "no field called text and lang")
+            return JsonResponse(response_obj.__dict__, status=400) 
+
+
+
+############################################# Text-to-Text-end #######################
+
 
 ############################################## Fahads Code ###########################
 
@@ -56,8 +89,6 @@ def text_explanation(answer,question_type,obj_extractor):
         object = obj_extractor["objects"][0]
         num_01 = obj_extractor['numbers'][0]
         num_02 = obj_extractor['numbers'][1]
-        lemmatizer = WordNetLemmatizer()
-        single_obj = lemmatizer.lemmatize(object)
         numbers_in_words = ""
         numbers_to_be_sub = ""
         number_word_list = ["one","two","three","four","five","six","seven","eight","nine","ten","eleven","twelve","thirteen","fourteen","fifteen","sixteen","seventeen","eighteen","nineteen","twenty"]
@@ -65,7 +96,7 @@ def text_explanation(answer,question_type,obj_extractor):
             numbers_in_words += " "+number_word_list[i]+","
         for i in range(int(num_02)):
             numbers_to_be_sub += " "+number_word_list[i]+","    
-        text = f"Of the given quantity, when something is  given away, this represents reduction in the existing quantity, is called subtraction and is represented by - sign. We see all {num_01} {object} in the plate as shown. {num_02} {object} were given from this. We will scratch one {single_obj} for every {single_obj} being given away. Now the unscratched {object} are remaining. Let us count these remaining {object}.{numbers_in_words} This count will represent {num_01} minus {num_02} gives {answer} . So after giving away {num_02} {object} from {num_01} {object} what we get is {answer} {object}, which is the answer."
+        text = f"Of the given quantity, when something is  given away, this represents reduction in the existing quantity, is called subtraction and is represented by - sign. We see all {num_01} {object} in the plate as shown. {num_02} {object} were given from this. We will scratch one {object} for every {object} being given away. Now the unscratched {object} are remaining. Let us count these remaining {object}.{numbers_in_words} This count will represent {num_01} minus {num_02} gives {answer} . So after giving away {num_02} {object} from {num_01} {object} what we get is {answer} {object}, which is the answer."
         text_exp ={
             0 : {
                     "commentary" : "Of the given quantity, when something is given away, represents, reduction in existing quantity, is called subtraction, and is represented by minus sign.",
@@ -811,7 +842,7 @@ def addition_by_get(request):
             return JsonResponse(response_obj.__dict__, status=400)
 
     except KeyError as e:
-            response_obj = ResponseClass(400, "no field called a nad b")
+            response_obj = ResponseClass(400, "no field called a and b")
             return JsonResponse(response_obj.__dict__, status=400)
            
 

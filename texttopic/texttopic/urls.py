@@ -35,5 +35,6 @@ urlpatterns = [
     path('displaying_angles/', views.display_angle),
     path('naming_figures/', views.naming_fig),
     path('naming_figures_single_question/', views.naming_fig_single_ques),
+    path('convert_text_to_text/', views.txt_to_txt),
 
 ]
