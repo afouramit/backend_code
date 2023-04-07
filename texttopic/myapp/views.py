@@ -12,6 +12,49 @@ import copy
 import ast
 from random import choice
 
+############################################# text-to-speech #########################
+from django.http import FileResponse
+from rest_framework.decorators import api_view
+
+from gtts import gTTS
+import io
+
+from googletrans import Translator
+translator = Translator()
+
+def generate_audio(text,lang):
+    out = translator.translate(text,dest=lang)
+    tts = gTTS(text=out.text, lang=lang)
+    fp = io.BytesIO()
+    tts.write_to_fp(fp)
+    fp.seek(0)
+    response = FileResponse(fp, content_type='audio/mpeg')
+    response['Content-Disposition'] = 'attachment; filename="audio.mp3"'
+    return response
+
+@api_view(['GET'])
+def text_to_speech(request):
+    try:
+        
+        text  = request.META.get('HTTP_TEXT')
+        lang    = request.META.get('HTTP_LANG')
+
+        if text and lang:
+             
+            dict_data = generate_audio(text,lang)
+            return dict_data
+        else:
+            response_obj = ResponseClass(400, "text and lang parameter cannot be null")
+            return JsonResponse(response_obj.__dict__, status=400)
+
+    except KeyError as e:
+            response_obj = ResponseClass(400, "no field called text and lang")
+            return JsonResponse(response_obj.__dict__, status=400) 
+
+
+############################################# text-to-speech end #########################
+
+
 
 ############################################# Text-to-Text ###########################
 from googletrans import Translator
