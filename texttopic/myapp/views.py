@@ -189,7 +189,7 @@ def division():
 
 def random_question_generator_add():
     names_list = ["Anil","Sunil","Shyam","Ronit","Vinshnu","Fahad","Nitin","Josh","Rahul","Amit"]
-    objects_list = ["Balls","Bats","Rubbers","Books","Apples","Oranges"]
+    objects_list = ["Apples", "Oranges", "Bats", "Balls", "Books"]
     text = Add_question
     
     doc = nlp(Add_question)
