@@ -170,6 +170,24 @@ def text_explanation(answer,question_type,obj_extractor):
                     "call_to_action" : f"Display {answer} on the screen ."
                 },                 
         }    
+    if question_type == "multiplication":
+        object = obj_extractor["objects"][0]
+        num_01 = int(obj_extractor['numbers'][0])
+        num_02 = int(obj_extractor['numbers'][1])
+
+        number_word_list = ["first","second","third","fourth","fifth","sixth","Seventh","Eighth","Ninth","Tenth"]
+        Dict = dict()
+        for i in range(num_01 + 2):
+            if i == 0 :
+                Dict[i] = "The result of multiplication can be obtained by repeatative addition."
+            if i == 1 :
+                Dict[i] = f"Start with {number_word_list[i-1]} {object} item. Since it costs {num_02} ruppees, write down {num_02}." 
+            if i > 1 and i < num_01 + 1:
+                Dict[i] = f"Add another {num_02} ruppees for {number_word_list[i-1]} {object}."
+            if i == num_01 + 1:
+                Dict[i] = f"So, the total cost of all {object} is {answer} ruppees"
+        text_exp = Dict        
+                            
     return text_exp
 
 
@@ -380,8 +398,10 @@ def question_with_text_exp(question_type, question_number ):
             question_multi.update({'Answer':multiplication})
             obj_extractor = numbers_and_object_extracor(text)
             question_multi.update({'Objects':obj_extractor})
+            txt_explanation = text_explanation(multiplication,question_type,obj_extractor)
+            question_multi.update({'Text_Explanation':txt_explanation})
             lst_multi.append(question_multi)
-            #lst_multi.append(random_question_generator_add_and_multi(question_name ))
+            
         return lst_multi
     elif question_type == "subtraction":
         lst_sub = []
