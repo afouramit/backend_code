@@ -188,13 +188,13 @@ def text_explanation(answer,question_type,obj_extractor):
         for i in range(4):
             
             if i == 0 :
-                Dict[i] = "The result of multiplication can be obtained by repeatative addition."
+                Dict[i] = {"commentary":"The result of multiplication can be obtained by repeatative addition."}
             if i == 1 :
-                Dict[i] = f"Each {object} costs {num_02} rupees .To find total cost we have to add {num_02}, {num_01} times .." 
+                Dict[i] = {"commentary":f"Each {object} costs {num_02} rupees .To find total cost we have to add {num_02}, {num_01} times ."} 
             if i == 2:
-                Dict[i] = f"The total cost now is {''.join(num_list)} = {answer} "
+                Dict[i] = {"commentary":f"The total cost now is {''.join(num_list)} = {answer} "}
             if i == 3:
-                Dict[i] = f"So, the total cost of all {object} is {answer} ruppees"
+                Dict[i] = {"commentary":f"So, the total cost of all {object} is {answer} ruppees"}
                 text_exp = Dict  
 
     if question_type == "division":
