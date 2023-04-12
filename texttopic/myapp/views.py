@@ -178,16 +178,24 @@ def text_explanation(answer,question_type,obj_extractor):
 
         number_word_list = ["first","second","third","fourth","fifth","sixth","Seventh","Eighth","Ninth","Tenth"]
         Dict = dict()
-        for i in range(num_01 + 2):
+        num_list = list()
+        for i in range(num_01):
+                if i == 0:
+                    num_list.append(str(num_02))
+                else:    
+                    num_list.append(f"+{num_02}")     
+
+        for i in range(4):
+            
             if i == 0 :
-                Dict[i] = {"commentary":"The result of multiplication can be obtained by repeatative addition."}
+                Dict[i] = "The result of multiplication can be obtained by repeatative addition."
             if i == 1 :
-                Dict[i] = {"commentary":f"Start with {number_word_list[i-1]} {object} item. Since it costs {num_02} ruppees, write down {num_02}."} 
-            if i > 1 and i < num_01 + 1:
-                Dict[i] = {"commentary":f"Add another {num_02} ruppees for {number_word_list[i-1]} {object}."}
-            if i == num_01 + 1:
-                Dict[i] = {"commentary":f"So, the total cost of all {object} is {answer} ruppees"}
-        text_exp = Dict  
+                Dict[i] = f"Each {object} costs {num_02} rupees .To find total cost we have to add {num_02}, {num_01} times .." 
+            if i == 2:
+                Dict[i] = f"The total cost now is {''.join(num_list)} = {answer} "
+            if i == 3:
+                Dict[i] = f"So, the total cost of all {object} is {answer} ruppees"
+                text_exp = Dict  
 
     if question_type == "division":
         object = obj_extractor["objects"][0]
