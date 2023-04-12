@@ -97,6 +97,7 @@ Multi_question = "Anand has 27 stickers. He bought each of 5 rupees. What is the
 Div_question = "Anand has 9 stickers. He distrubted among 3 children. How much stickers does each child got?"
 
 def text_explanation(answer,question_type,obj_extractor):
+    
     if question_type == "addition":
         object = obj_extractor["objects"][0]
         num1 = obj_extractor["numbers"][0]
@@ -186,7 +187,22 @@ def text_explanation(answer,question_type,obj_extractor):
                 Dict[i] = {"commentary":f"Add another {num_02} ruppees for {number_word_list[i-1]} {object}."}
             if i == num_01 + 1:
                 Dict[i] = {"commentary":f"So, the total cost of all {object} is {answer} ruppees"}
-        text_exp = Dict        
+        text_exp = Dict  
+
+    if question_type == "division":
+        object = obj_extractor["objects"][0]
+        num_01 = int(obj_extractor['numbers'][0])
+        num_02 = int(obj_extractor['numbers'][1])
+
+        text_exp = dict()
+        for i in range(3):
+            if i == 0 :
+                text_exp[i] = {"commentary":",The result of Division can be obtained by repeatative Subtraction and is represented by '%' sign"}
+            if i == 1 :
+                text_exp[i] = {"commentary":f"We shall make set of {num_02} {object}, and repeatedly, move it to the second mat, untill there remains 0 {object} on first mat"}
+            else: 
+                pass     
+                   
                             
     return text_exp
 
@@ -427,9 +443,9 @@ def question_with_text_exp(question_type, question_number ):
             question_div.update({'Answer':quotient})
             obj_extractor = numbers_and_object_extracor(text)
             question_div.update({'Objects':obj_extractor})
+            txt_explanation = text_explanation(quotient,question_type,obj_extractor)
+            question_div.update({'Text_Explanation':txt_explanation})
             lst_div.append(question_div)
-            #lst_div.append(random_question_generator_divide(question_name ))
-        #print(lst_div)
         return lst_div
 
 ############################################## Fahads Code-end #######################
