@@ -132,13 +132,13 @@ def text_explanation(answer,question_type,obj_extractor):
 
         text_exp = {
             0 : {
-                  "commentary" :f"There are {num1} {object} in first plate",
+                  "commentary" :f"There are {num1} {object} in first basket",
                   },
             1 : {
-                  "commentary" :f"And {num2} {object} in another plate",  
+                  "commentary" :f"And {num2} {object} in another basket",  
                 },
             2 : {
-                  "commentary" :f"To find the answer for this we need to combine the {object} from both the plates together..",
+                  "commentary" :f"To find the answer for this we need to combine the {object} from both the basket together..",
                 }, 
             3 : {
                   "commentary" :f"This is called addition and it is symbolically represented as.",
@@ -258,7 +258,8 @@ def division():
 
 def random_question_generator_add():
     names_list = ["Anil","Sunil","Shyam","Ronit","Vinshnu","Fahad","Nitin","Josh","Rahul","Amit"]
-    objects_list = ["Apples", "Oranges", "Bats", "Balls", "Books"]
+    objects_list = ["Apples"]
+    # ["Apples", "Oranges", "Bats", "Balls", "Books"]
     text = Add_question
     
     doc = nlp(Add_question)
