@@ -145,6 +145,8 @@ CORS_ALLOW_HEADERS = [
     'numbers',
     'question',
     'list',
+    'lang',
+    'text',
     
 ]
 

@@ -107,28 +107,55 @@ def text_explanation(answer,question_type,obj_extractor):
         for i in range(answer):
             numbers_in_words += " "+number_word_list[i]+","
         text = f"To find the answer for this, we need to combine the {object} from both plates together. This is called addition and it is symbolically represented by + sign. Addition is nothing but bringing the things together. To find the total number of {object} in both the plates, we will combine them and put it in the third plate. Now let us count these combined {object} which are kept in the third plate.{numbers_in_words} So the total number of {object} are {answer} which is the answer.  "
+        # text_exp = {
+        #     0 : {
+        #           "commentary" :"Visualizing the above question, we shall have following scenario",
+        #           "call_to_action" :f"display 3 mats, such that we have {num1} {object} on first mat, {num2} {object} on second mat, and third mat is empty."
+        #         },
+        #     1 : {
+        #           "commentary" :f"To find the answer for this, we need to combine the {object} from both mats together. This is called addition and it is symbolically represented by + sign.",
+        #           "call_to_action" :f"Display '+' sign between mat1 and mat2"
+        #         },
+        #     2 : {
+        #           "commentary" :f"Addition is nothing but bringing the things together. To find the total number of {object} on both mats, we will combine them and put it on the third mat.",
+        #           "call_to_action" :f"move the objects from mat1 and mat2 to mat3"
+        #         }, 
+        #     3 : {
+        #           "commentary" :f"Now let us count these combined {object} which are kept on the third mat.{numbers_in_words}.",
+        #           "call_to_action" :f"highlight the object along with incrementing numbers, one-by-one"
+        #         }, 
+        #     4 : {
+        #           "commentary" :f"So the total number of {object} are {answer} which is the answer.",
+        #           "call_to_action" :f"encircle the objects on mat3, and display the number {answer}"
+        #         },                
+        # }
+
         text_exp = {
             0 : {
-                  "commentary" :"Visualizing the above question, we shall have following scenario",
-                  "call_to_action" :f"display 3 mats, such that we have {num1} {object} on first mat, {num2} {object} on second mat, and third mat is empty."
-                },
+                  "commentary" :f"There are {num1} {object} in first plate",
+                  },
             1 : {
-                  "commentary" :f"To find the answer for this, we need to combine the {object} from both mats together. This is called addition and it is symbolically represented by + sign.",
-                  "call_to_action" :f"Display '+' sign between mat1 and mat2"
+                  "commentary" :f"And {num2} {object} in another plate",  
                 },
             2 : {
-                  "commentary" :f"Addition is nothing but bringing the things together. To find the total number of {object} on both mats, we will combine them and put it on the third mat.",
-                  "call_to_action" :f"move the objects from mat1 and mat2 to mat3"
+                  "commentary" :f"To find the answer for this we need to combine the {object} from both the plates together..",
                 }, 
             3 : {
-                  "commentary" :f"Now let us count these combined {object} which are kept on the third mat.{numbers_in_words}.",
-                  "call_to_action" :f"highlight the object along with incrementing numbers, one-by-one"
+                  "commentary" :f"This is called addition and it is symbolically represented as.",
                 }, 
             4 : {
-                  "commentary" :f"So the total number of {object} are {answer} which is the answer.",
-                  "call_to_action" :f"encircle the objects on mat3, and display the number {answer}"
-                },                
-        }
+                  "commentary" :f"This sign is called ‘plus’ and it represents addition.",
+                },
+            5 : {
+                  "commentary" :f"Addition is nothing but bringing the things together or mixing the things together or joining the things together or combining two or more things together.",
+                },
+            6 : {
+                  "commentary" :f"Now let us count these combined (total) {object}",
+                },    
+            7 : {
+                  "commentary" :f"So the total number of {object} are {answer}",
+                },            
+        }    
     if question_type == "subtraction":
         object = obj_extractor["objects"][0]
         num_01 = obj_extractor['numbers'][0]
