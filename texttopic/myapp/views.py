@@ -132,10 +132,10 @@ def text_explanation(answer,question_type,obj_extractor):
 
         text_exp = {
             0 : {
-                  "commentary" :f"There are {num1} {object} in first basket",
+                  "commentary" :f"There are some {object} in first basket",
                   },
             1 : {
-                  "commentary" :f"And {num2} {object} in another basket",  
+                  "commentary" :f"And some {object} in another basket",  
                 },
             2 : {
                   "commentary" :f"To find the answer for this we need to combine the {object} from both the basket together..",
