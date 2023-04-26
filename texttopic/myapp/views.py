@@ -208,10 +208,10 @@ def text_explanation(answer,question_type,obj_extractor,version=None):
 
             text_exp ={
                 0 : {
-                        "commentary" : f"There are {num_01} {object} in one basket",
+                        "commentary" : f"There are some {object} in one basket",
                     },
                 1 : {
-                        "commentary" : f"And {num_02} {object} in another basket.",
+                        "commentary" : f"And some {object} in another basket.",
                     },  
                 2 : {
                         "commentary" : f"To find the answer for this we need to combine the {object} from both the baskets together.",
@@ -220,7 +220,7 @@ def text_explanation(answer,question_type,obj_extractor,version=None):
                         "commentary" : f"This is called addition and it is symbolically represented as.",      
                     }, 
                 4 : {
-                        "commentary" : f"This sign is called ‘plus’ and it represents addition.",      
+                        "commentary" : f"This sign is called plus and it represents addition.",      
                     }, 
                 5 : {
                         "commentary" : f"Addition is nothing but bringing the things together or mixing the things together or joining the things together or combining two or more things together.",      
