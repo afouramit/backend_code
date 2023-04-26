@@ -147,6 +147,7 @@ CORS_ALLOW_HEADERS = [
     'list',
     'lang',
     'text',
+    'version'
     
 ]
 

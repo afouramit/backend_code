@@ -88,74 +88,152 @@ def txt_to_txt(request):
 
 ############################################# Text-to-Text-end #######################
 
-
 ############################################## Fahads Code ###########################
 
-Add_question = "Anand has 27 stickers. He bought 5 more. How many stickers does he have?" 
+Add_question = "Anand has 27 stickers. Nitin has 5 stikers. How many stickers they have together?" 
 Sub_question = "Anand has 27 stickers. He gives 5 stickers to Sita. How many stickers does Anand left?"
 Multi_question = "Anand has 27 stickers. He bought each of 5 rupees. What is the total cost?"
 Div_question = "Anand has 9 stickers. He distrubted among 3 children. How much stickers does each child got?"
 
-def text_explanation(answer,question_type,obj_extractor):
+def text_explanation(answer,question_type,obj_extractor,version=None):
     
     if question_type == "addition":
-        object = obj_extractor["objects"][0]
-        num1 = obj_extractor["numbers"][0]
-        num2 = obj_extractor["numbers"][1]
-        numbers_in_words = ""
-        number_word_list = ["one","two","three","four","five","six","seven","eight","nine","ten","eleven","twelve","thirteen","fourteen","fifteen","sixteen","seventeen","eighteen","nineteen","twenty"]
-        for i in range(answer):
-            numbers_in_words += " "+number_word_list[i]+","
-        text = f"To find the answer for this, we need to combine the {object} from both plates together. This is called addition and it is symbolically represented by + sign. Addition is nothing but bringing the things together. To find the total number of {object} in both the plates, we will combine them and put it in the third plate. Now let us count these combined {object} which are kept in the third plate.{numbers_in_words} So the total number of {object} are {answer} which is the answer.  "
-        # text_exp = {
-        #     0 : {
-        #           "commentary" :"Visualizing the above question, we shall have following scenario",
-        #           "call_to_action" :f"display 3 mats, such that we have {num1} {object} on first mat, {num2} {object} on second mat, and third mat is empty."
-        #         },
-        #     1 : {
-        #           "commentary" :f"To find the answer for this, we need to combine the {object} from both mats together. This is called addition and it is symbolically represented by + sign.",
-        #           "call_to_action" :f"Display '+' sign between mat1 and mat2"
-        #         },
-        #     2 : {
-        #           "commentary" :f"Addition is nothing but bringing the things together. To find the total number of {object} on both mats, we will combine them and put it on the third mat.",
-        #           "call_to_action" :f"move the objects from mat1 and mat2 to mat3"
-        #         }, 
-        #     3 : {
-        #           "commentary" :f"Now let us count these combined {object} which are kept on the third mat.{numbers_in_words}.",
-        #           "call_to_action" :f"highlight the object along with incrementing numbers, one-by-one"
-        #         }, 
-        #     4 : {
-        #           "commentary" :f"So the total number of {object} are {answer} which is the answer.",
-        #           "call_to_action" :f"encircle the objects on mat3, and display the number {answer}"
-        #         },                
-        # }
+        if version == '4':
+            extracted_objects = obj_extractor
+            num_01 = extracted_objects['numbers'][0]
+            num_02 = extracted_objects['numbers'][1]
+            object = extracted_objects['objects'][0]
+            first_name = extracted_objects['names'][0]
+            if len(extracted_objects['names']) == 2:
+                second_name = extracted_objects['names'][1]
+            else:
+                second_name = "Akshay"
 
-        text_exp = {
-            0 : {
-                  "commentary" :f"There are some {object} in first basket",
-                  },
-            1 : {
-                  "commentary" :f"And some {object} in another basket",  
-                },
-            2 : {
-                  "commentary" :f"To find the answer for this we need to combine the {object} from both the basket together..",
-                }, 
-            3 : {
-                  "commentary" :f"This is called addition and it is symbolically represented as.",
-                }, 
-            4 : {
-                  "commentary" :f"This sign is called ‘plus’ and it represents addition.",
-                },
-            5 : {
-                  "commentary" :f"Addition is nothing but bringing the things together or mixing the things together or joining the things together or combining two or more things together.",
-                },
-            6 : {
-                  "commentary" :f"Now let us count these combined (total) {object}",
-                },    
-            7 : {
-                  "commentary" :f"So the total number of {object} are {answer}",
-                },            
-        }    
+
+            ques = f"{first_name}  has {num_01} {object} and {second_name} has {num_02} {object}. How many {object} they have together ?"
+
+            text_exp ={
+                0 : {
+                        "commentary" : f"To find how many {object} {first_name} and {second_name} have together,we need to do the addition of the {object} each of them have,",
+                    },
+                1 : {
+                        "commentary" : f"To find the total, read out numbers next to the number of {object} {first_name} has.",
+                    },  
+                2 : {
+                        "commentary" : f"{first_name} has {num_01} {object} and {second_name} has {num_02} {object}. To find the total number of {object}, count {num_02} numbers next to {num_01}.",
+                    },        
+                3 : {
+                        "commentary" : f"Thus it would be {','.join([str(x) for x in range(int(num_01)+1,int(num_01)+int(num_02)+1)])}.Therefore the total number of {object} are {int(num_01) + int(num_02)}.",
+                        
+                    },           
+            }   
+
+        elif version == '3':
+            extracted_objects = obj_extractor
+            num_01 = extracted_objects['numbers'][0]
+            num_02 = extracted_objects['numbers'][1]
+            object = extracted_objects['objects'][0]
+
+            ques = f"{num_01} + {num_02} = ?"
+
+            text_exp ={
+                        0 : {
+                                "commentary" : f"Here plus sign indicates addition",
+                            },
+                        1 : {
+                                "commentary" : f"Addition is nothing but bringing the things together or mixing the things together or joining the things together or combining two or more things together.",
+                            },  
+                        2 : {
+                                "commentary" : f"For example,Let Umesh has {num_01} {object} in one bowl.",
+                            },        
+                        3 : {
+                                "commentary" : f"and Rahim has {num_02} {object} in other bowl",  
+                            }, 
+                        4 : {
+                                "commentary" : f"To add them together, we need to combine {num_01} and {num_02} {object}.",  
+                            }, 
+                        5 : {
+                                "commentary" : f"Now let us count these combined {object}.",  
+                            }, 
+                        6 : {
+                                "commentary" : f"Mathematically this is represented as.",  
+                            },   
+                        7 : {
+                                "commentary" : f"Therefore {num_01} plus {num_02} is equal to {int(num_01) + int(num_02)}.",  
+                            },                     
+                    }
+            
+        elif version == '2':
+            extracted_objects = obj_extractor
+            num_01 = extracted_objects['numbers'][0]
+            num_02 = extracted_objects['numbers'][1]
+            object = extracted_objects['objects'][0]
+
+            ques = f" There are {num_01} {object} in one basket. And {num_02} {object} in another basket. How many total {object} are there? "
+            
+            text_exp ={
+                0 : {
+                        "commentary" : f"There are {num_01} {object} in one basket",
+                    },
+                1 : {
+                        "commentary" : f"And {num_02} {object} in another basket.",
+                    },  
+                2 : {
+                        "commentary" : f"To find the answer for this we need to combine the {object} from both the baskets together in a new basket.",
+                    },        
+                3 : {
+                        "commentary" : f"This is called addition. Addition is nothing but bringing the things together or mixing the things together or joining the things together or combining two or more things together.",      
+                    }, 
+                4 : {
+                        "commentary" : f"Now let us count these combined {object}.",      
+                    }, 
+                5 : {
+                        "commentary" : f"Mathematically this is represented as",      
+                    }, 
+                6 : {
+                        "commentary" : f"This sign is called equal to and it represents total.",      
+                    }, 
+                7 : {
+                        "commentary" : f"So the total number of {object} are {int(num_01) + int(num_02)}.",      
+                    },                               
+            } 
+
+        elif version == '1':
+            extracted_objects = obj_extractor
+            num_01 = extracted_objects['numbers'][0]
+            num_02 = extracted_objects['numbers'][1]
+            object = extracted_objects['objects'][0]
+            
+            ques = f"There are some {object} in one basket. And  some {object} in another basket.How many total {object} are there ?"
+
+            text_exp ={
+                0 : {
+                        "commentary" : f"There are {num_01} {object} in one basket",
+                    },
+                1 : {
+                        "commentary" : f"And {num_02} {object} in another basket.",
+                    },  
+                2 : {
+                        "commentary" : f"To find the answer for this we need to combine the {object} from both the baskets together.",
+                    },        
+                3 : {
+                        "commentary" : f"This is called addition and it is symbolically represented as.",      
+                    }, 
+                4 : {
+                        "commentary" : f"This sign is called ‘plus’ and it represents addition.",      
+                    }, 
+                5 : {
+                        "commentary" : f"Addition is nothing but bringing the things together or mixing the things together or joining the things together or combining two or more things together.",      
+                    }, 
+                6 : {
+                        "commentary" : f"Now let us count these combined (total) {object}.",      
+                    }, 
+                7 : {
+                        "commentary" : f"So the total number of {object} are {int(num_01) + int(num_02)}.",      
+                    },                               
+            } 
+        return ques,text_exp 
+        
     if question_type == "subtraction":
         object = obj_extractor["objects"][0]
         num_01 = obj_extractor['numbers'][0]
@@ -426,18 +504,18 @@ def question(question_type, question_number ):
             
         return lst_div
 
-def question_with_text_exp(question_type, question_number ):
-    #print("Hey")
+def question_with_text_exp(question_type, question_number, version = None ):
     if question_type == "addition":
         lst_add = []
         for i  in range(question_number):
             question_add = {}
             text, addition = random_question_generator_add()
             obj_extractor = numbers_and_object_extracor(text)
-            question_add.update({'Question':text})
+            ques,txt_explanation = text_explanation(addition,question_type,obj_extractor,version)
+            question_add.update({'Question':ques})
             question_add.update({'Answer':addition})
+            question_add.update({'Version':version})
             question_add.update({'Objects':obj_extractor})
-            txt_explanation = text_explanation(addition,question_type,obj_extractor)
             question_add.update({'Text_Explanation':txt_explanation})
             lst_add.append(question_add)
         return lst_add
@@ -486,12 +564,15 @@ def question_with_text_exp(question_type, question_number ):
 
 ############################################## Fahads Code-end #######################
 
+
+
 ################################################ number_and_object_extractor ###########
 def numbers_and_object_extracor(question):
     doc = nlp(question)
 
     num_list = []
     object_list = []
+    name_list = []
     dicts = {}
 
     for token in doc:
@@ -500,13 +581,16 @@ def numbers_and_object_extracor(question):
             num_list.append(token.text)  
         elif (token.pos_ == "PROPN" and token.dep_ == "dobj") or (token.pos_ == "NOUN" and token.dep_ == "dobj"):
             object_list.append(token.text) 
+        elif (token.pos_ == "PROPN" and token.dep_ == "nsubj") or (token.pos_ == "PROPN" and token.dep_ == "pobj"):
+            name_list.append(token.text)    
         else:
             pass  
 
     dicts['numbers'] = num_list
-    dicts['objects'] = object_list    
+    dicts['objects'] = object_list 
+    dicts['names'] = name_list  
 
-    return dicts    
+    return dicts     
 ################################################ number_and_object_extractor-end #######
 
 ################################ Fraction_Section_Functions ################################
@@ -1048,10 +1132,11 @@ def rand_ques_generator_with_text_explanation(request):
         
         question_number  = int(request.META.get('HTTP_A'))
         question_type    = request.META.get('HTTP_TYPE')
+        question_version = request.META.get('HTTP_VERSION')
 
-        if question_number>0 and question_number<11 and question_type:
+        if question_number>0 and question_number<11 and question_type or question_version:
              
-            dict_data = question_with_text_exp(question_type, question_number )
+            dict_data = question_with_text_exp(question_type, question_number,question_version)
         
             response_obj = ResponseClass(200, "Add Successful",dict_data)
             return JsonResponse(response_obj.__dict__, status=200)
