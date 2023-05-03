@@ -144,10 +144,10 @@ def text_explanation(answer,question_type,obj_extractor,version=None):
                                 "commentary" : f"Addition is nothing but bringing the things together or mixing the things together or joining the things together or combining two or more things together.",
                             },  
                         2 : {
-                                "commentary" : f"For example,Let Umesh has {num_01} {object} in one bowl.",
+                                "commentary" : f"For example,Let Umesh has {num_01} {object} in one basket.",
                             },        
                         3 : {
-                                "commentary" : f"and Rahim has {num_02} {object} in other bowl",  
+                                "commentary" : f"and Rahim has {num_02} {object} in other basket",  
                             }, 
                         4 : {
                                 "commentary" : f"To add them together, we need to combine {num_01} and {num_02} {object}.",  
