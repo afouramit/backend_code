@@ -106,6 +106,8 @@ def text_explanation(answer,question_type,obj_extractor,version=None):
             first_name = extracted_objects['names'][0]
             if len(extracted_objects['names']) == 2:
                 second_name = extracted_objects['names'][1]
+                if first_name == second_name:
+                    second_name = "Akshay"
             else:
                 second_name = "Akshay"
 
@@ -123,9 +125,13 @@ def text_explanation(answer,question_type,obj_extractor,version=None):
                         "commentary" : f"{first_name} has {num_01} {object} and {second_name} has {num_02} {object}. To find the total number of {object}, count {num_02} numbers next to {num_01}.",
                     },        
                 3 : {
-                        "commentary" : f"Thus it would be {','.join([str(x) for x in range(int(num_01)+1,int(num_01)+int(num_02)+1)])}.Therefore the total number of {object} are {int(num_01) + int(num_02)}.",
+                        "commentary" : f"Thus it would be ",
                         
-                    },           
+                    },    
+                4 : {
+                        "commentary" : f"Therefore the total number of {object} are {int(num_01) + int(num_02)}.",
+                        
+                    },               
             }   
 
         elif version == '3':
