@@ -187,8 +187,8 @@ def convert_set_of_text_to_pic(question_list):
 
 
 def create_q_image(number_list, question_operator):
-    basket_image= Image.open('myapp/source_image/Basket.png')
-    apple_image = Image.open('myapp/source_image/apple.png').resize(size=(30, 30))
+    basket_image= Image.open('myapp/source_image/Basket2.png')
+    apple_image = Image.open('myapp/source_image/apple2.png').resize(size=(30, 30))
     if question_operator == "addition":
         operator_image = Image.open(r'myapp/source_image/plus-sign.png').resize(size=(125, 125))
     elif question_operator == "subtraction":
@@ -235,12 +235,12 @@ def create_q_image(number_list, question_operator):
                 if i ==0 :
                     question_image.paste(basket_image, (q, z))
                     z = z + 50
-                    q = q + 50
+                    q = q + 30
                 question_image.paste(im_q["image"], (q, z))
                 q = q+33
                 if (i+1) % 4 == 0:
                     z = z + 53
-                    q = p + 50
+                    q = p + 30
                 if i == im_q["count"] - 1:
                     p += 225
             else:
