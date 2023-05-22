@@ -342,7 +342,7 @@ def division():
 
 def random_question_generator_add():
     names_list = ["Anil","Sunil","Shyam","Ronit","Vinshnu","Fahad","Nitin","Josh","Rahul","Amit"]
-    objects_list = ["Apples"]
+    objects_list = ["Apples","Oranges","Bats","Balls","Pens","Books","Bear","Cupcake","Donut","Lantern","Toy","Duck"]
     # ["Apples", "Oranges", "Bats", "Balls", "Books"]
     text = Add_question
     
@@ -370,7 +370,7 @@ def random_question_generator_add():
 
 def random_question_generator_multi():
     names_list = ["Anil","Sunil","Shyam","Ronit","Vinshnu","Fahad","Nitin","Josh","Rahul","Amit"]
-    objects_list = ["Ball","Bat","Pencil","Rubber","Books","Apples","Oranges"]
+    objects_list = ["Apples","Oranges","Bats","Balls","Pens","Books","Bear","Cupcake","Donut","Lantern","Toy","Duck"]
     text = Multi_question
     
     doc = nlp(Multi_question)
@@ -397,7 +397,7 @@ def random_question_generator_multi():
 
 def random_question_generator_subtract():
     names_list = ["Anil","Sunil","Shyam","Ronit","Vinshnu","Fahad","Nitin","Josh","Rahul","Amit"]
-    objects_list = ["Ball","Bat","Pencil","Rubber","Books","Apples","Oranges"]
+    objects_list = ["Apples","Oranges","Bats","Balls","Pens","Books","Bear","Cupcake","Donut","Lantern","Toy","Duck"]
     text = Sub_question
     
     doc = nlp(Sub_question)
@@ -419,7 +419,7 @@ def random_question_generator_subtract():
 
 def random_question_generator_divide():
     names_list = ["Anil","Sunil","Shyam","Ronit","Vinshnu","Fahad","Nitin","Josh","Rahul","Amit"]
-    objects_list = ["Ball","Bat","Pencil","Rubber","Books","Apples","Oranges"]
+    objects_list = ["Apples","Oranges","Bats","Balls","Pens","Books","Bear","Cupcake","Donut","Lantern","Toy","Duck"]
     text = Div_question
     
     Divisor, Dividend = division()
@@ -521,6 +521,7 @@ def question_with_text_exp(question_type, question_number, version = None ):
             question_add.update({'Question':ques})
             question_add.update({'Answer':addition})
             question_add.update({'Version':version})
+            question_add.update({'question_type':question_type})
             question_add.update({'Objects':obj_extractor})
             question_add.update({'Text_Explanation':txt_explanation})
             lst_add.append(question_add)
