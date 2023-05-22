@@ -342,7 +342,7 @@ def division():
 
 def random_question_generator_add():
     names_list = ["Anil","Sunil","Shyam","Ronit","Vinshnu","Fahad","Nitin","Josh","Rahul","Amit"]
-    objects_list = ["Apples","Oranges","Bats","Balls","Pens","Books","Bear","Cupcake","Donut","Lantern","Toy","Duck"]
+    objects_list = ["Apples","Oranges","Bats","Balls","Pens","Books","Bears","Cupcakes","Donuts","Lanterns","Toys","Ducks"]
     # ["Apples", "Oranges", "Bats", "Balls", "Books"]
     text = Add_question
     
@@ -370,7 +370,8 @@ def random_question_generator_add():
 
 def random_question_generator_multi():
     names_list = ["Anil","Sunil","Shyam","Ronit","Vinshnu","Fahad","Nitin","Josh","Rahul","Amit"]
-    objects_list = ["Apples","Oranges","Bats","Balls","Pens","Books","Bear","Cupcake","Donut","Lantern","Toy","Duck"]
+    objects_list = ["Apples","Oranges","Bats","Balls","Pens","Books","Bears","Cupcakes","Donuts","Lanterns","Toys","Ducks"]
+
     text = Multi_question
     
     doc = nlp(Multi_question)
@@ -397,7 +398,7 @@ def random_question_generator_multi():
 
 def random_question_generator_subtract():
     names_list = ["Anil","Sunil","Shyam","Ronit","Vinshnu","Fahad","Nitin","Josh","Rahul","Amit"]
-    objects_list = ["Apples","Oranges","Bats","Balls","Pens","Books","Bear","Cupcake","Donut","Lantern","Toy","Duck"]
+    objects_list = ["Apples","Oranges","Bats","Balls","Pens","Books","Bears","Cupcakes","Donuts","Lanterns","Toys","Ducks"]
     text = Sub_question
     
     doc = nlp(Sub_question)
@@ -419,7 +420,7 @@ def random_question_generator_subtract():
 
 def random_question_generator_divide():
     names_list = ["Anil","Sunil","Shyam","Ronit","Vinshnu","Fahad","Nitin","Josh","Rahul","Amit"]
-    objects_list = ["Apples","Oranges","Bats","Balls","Pens","Books","Bear","Cupcake","Donut","Lantern","Toy","Duck"]
+    objects_list = ["Apples","Oranges","Bats","Balls","Pens","Books","Bears","Cupcakes","Donuts","Lanterns","Toys","Ducks"]
     text = Div_question
     
     Divisor, Dividend = division()
