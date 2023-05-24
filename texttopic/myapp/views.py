@@ -125,12 +125,10 @@ def text_explanation(answer,question_type,obj_extractor,version=None):
                         "commentary" : f"{first_name} has {num_01} {object} and {second_name} has {num_02} {object}. To find the total number of {object}, count {num_02} numbers next to {num_01}.",
                     },        
                 3 : {
-                        "commentary" : f"Thus it would be ",
-                        
+                        "commentary" : f"Thus it would be ",   
                     },    
                 4 : {
-                        "commentary" : f"Therefore the total number of {object} are {int(num_01) + int(num_02)}.",
-                        
+                        "commentary" : f"Therefore the total number of {object} are {int(num_01) + int(num_02)}.",   
                     },               
             }   
 
@@ -321,13 +319,12 @@ def text_explanation(answer,question_type,obj_extractor,version=None):
                 text_exp[i] = {"commentary":f"We shall make set of {num_02} {object}, and repeatedly, move it to the second mat, untill there remains 0 {object} on first mat"}
             else: 
                 pass     
-                   
-                            
+                                         
     return text_exp
 
 
 def subs():
-    Subtrahend  = random.randint(1,5)
+    Subtrahend  = random.randint(2,5)
     Minuend  = random.randint(6,10)
     return Subtrahend ,Minuend 
 
@@ -352,7 +349,7 @@ def random_question_generator_add():
         if token.pos_ == "PROPN":
             text = re.sub(token.text, names_list[random.randint(0,len(names_list)-1)], text)
         elif token.pos_ == "NUM": 
-            text = re.sub(token.text, str(random.randint(1,8)), text)  
+            text = re.sub(token.text, str(random.randint(2,8)), text)  
         elif token.pos_ == "NOUN" and token.dep_ == "dobj" :
             text = re.sub(token.text, objects_list[random.randint(0,len(objects_list)-1)], text) 
         else:
@@ -572,8 +569,6 @@ def question_with_text_exp(question_type, question_number, version = None ):
 
 ############################################## Fahads Code-end #######################
 
-
-
 ################################################ number_and_object_extractor ###########
 def numbers_and_object_extracor(question):
     doc = nlp(question)
@@ -697,11 +692,7 @@ def identifying_shapes(request):
     try:
         num_of_ques = int(request.META.get('HTTP_NUMBERS'))
         if num_of_ques > 0 :
-            
             dict_data = identify_the_shape(num_of_ques)
-            
-            
-
             response_obj = ResponseClass(200, "Add Successful",dict_data)
             return JsonResponse(response_obj.__dict__, status=200)
         else:
@@ -716,7 +707,6 @@ def identifying_shapes(request):
 ######################### measuring angles ########################
 def measuring_angle(number):
     question_list = []
-
     for i in range(number):
         angle_value = random.randrange(5,170,5)
         option_list = [
@@ -731,7 +721,6 @@ def measuring_angle(number):
                     "options":option_list,
                }
         question_list.append(data)
-
     return question_list    
 
 @api_view(['GET'])
@@ -739,14 +728,12 @@ def measure_angle(request):
     try:
         num_of_ques = int(request.META.get('HTTP_NUMBERS'))
         if num_of_ques > 0 :
-            
             dict_data = measuring_angle(num_of_ques)
             response_obj = ResponseClass(200, "Add Successful",dict_data)
             return JsonResponse(response_obj.__dict__, status=200)
         else:
             response_obj = ResponseClass(400, "input cannot be zero")
             return JsonResponse(response_obj.__dict__, status=400)
-
     except KeyError as e:
             response_obj = ResponseClass(400, "no field specified")
             return JsonResponse(response_obj.__dict__, status=400) 
@@ -754,7 +741,6 @@ def measure_angle(request):
 ######################### measuring angles ########################
 def displaying_angle(number):
     question_list = []
-
     for i in range(number):
         angle_value = choice([i for i in range(5,75,5) if i not in [45]])
         option_list = [
@@ -769,7 +755,6 @@ def displaying_angle(number):
                     "options":option_list,
                }
         question_list.append(data)
-
     return question_list  
 
 @api_view(['GET'])
@@ -795,7 +780,6 @@ def display_angle(request):
 ######################### Identifying Angles ########################
 def angle_problem(number):
     question_list = []
-
     for i in range(number):
         obj = ["an acute angle","a complete angle","a obtuse angle","a reflex angle","a right angle","a straight angle",]
         object_list = [
@@ -841,7 +825,6 @@ def angle_problem(number):
             else: 
                 obj_selection = random.randint(0,len(obj)-1)
                 obj_of_obj_selection = random.randint(0,2)
-
                 if obj_selection == rand_obj:
                     option.append(object_list[rand_obj][obj_of_obj_selection])
                     answer.append(object_list[rand_obj][obj_of_obj_selection])
@@ -862,14 +845,12 @@ def identifying_angle(request):
     try:
         num_of_ques = int(request.META.get('HTTP_NUMBERS'))
         if num_of_ques > 0 :
-            
             dict_data = angle_problem(num_of_ques)
             response_obj = ResponseClass(200, "Add Successful",dict_data)
             return JsonResponse(response_obj.__dict__, status=200)
         else:
             response_obj = ResponseClass(400, "input cannot be zero")
             return JsonResponse(response_obj.__dict__, status=400)
-
     except KeyError as e:
             response_obj = ResponseClass(400, "no field specified")
             return JsonResponse(response_obj.__dict__, status=400) 
@@ -880,7 +861,6 @@ def identifying_angle(request):
 ######################### Naming Figures ############################
 def naming_figures(numbers):
     question_list = []
-
     problem_list = [
     {
         "fig":"https://i.ibb.co/qR5QHrZ/fig-01.png",
@@ -907,7 +887,6 @@ def naming_figures(numbers):
     for num in range(numbers):
         random_question = random.randint(0,len(problem_list)-1)
         question_list.append(problem_list[random_question])
-
     return question_list    
 
 @api_view(['GET'])
@@ -915,14 +894,12 @@ def naming_fig(request):
     try:
         num_of_ques = int(request.META.get('HTTP_NUMBERS'))
         if num_of_ques > 0 :
-            
             dict_data = naming_figures(num_of_ques)
             response_obj = ResponseClass(200, "Add Successful",dict_data)
             return JsonResponse(response_obj.__dict__, status=200)
         else:
             response_obj = ResponseClass(400, "input cannot be zero")
             return JsonResponse(response_obj.__dict__, status=400)
-
     except KeyError as e:
             response_obj = ResponseClass(400, "no field specified")
             return JsonResponse(response_obj.__dict__, status=400)
@@ -964,10 +941,8 @@ def naming_figures_single_question(numbers):
             "question": question,
             "figure": problem_list[random_question]["fig"],
             key_list[selected_fig_compnt]:problem_list[random_question][key_list[selected_fig_compnt]],
-
         }
         question_list.append(question_dict)
-
     return question_list  
 
 @api_view(['GET'])
@@ -975,14 +950,12 @@ def naming_fig_single_ques(request):
     try:
         num_of_ques = int(request.META.get('HTTP_NUMBERS'))
         if num_of_ques > 0 :
-            
             dict_data = naming_figures_single_question(num_of_ques)
             response_obj = ResponseClass(200, "Add Successful",dict_data)
             return JsonResponse(response_obj.__dict__, status=200)
         else:
             response_obj = ResponseClass(400, "input cannot be zero")
             return JsonResponse(response_obj.__dict__, status=400)
-
     except KeyError as e:
             response_obj = ResponseClass(400, "no field specified")
             return JsonResponse(response_obj.__dict__, status=400)
@@ -992,9 +965,6 @@ def naming_fig_single_ques(request):
 
 
 ################################# Sample_question_mahesh_sir #################################
-
-
-
 @api_view(['GET'])
 def convert_text_q_to_picture_q(request):
     try:
@@ -1010,7 +980,6 @@ def convert_text_q_to_picture_q(request):
         else:
             response_obj = ResponseClass(400, "Question can not be empty")
             return JsonResponse(response_obj.__dict__, status=400)
-
     except KeyError as e:
             response_obj = ResponseClass(400, "no field called question")
             return JsonResponse(response_obj.__dict__, status=400)
@@ -1028,7 +997,6 @@ def convert_pictorial_text_q_to_picture_q(request):
         else:
             response_obj = ResponseClass(400, "Image does not have a question")
             return JsonResponse(response_obj.__dict__, status=400)
-
     except KeyError as e:
             response_obj = ResponseClass(400, "no field called image")
             return JsonResponse(response_obj.__dict__, status=400)
@@ -1082,7 +1050,6 @@ def addition_by_post(request):
     try:
         num_of_ques = int(request.data["num"])
         if num_of_ques:
-
             dict_data = {}
             # a =int( request.data["a"])
             # b =int( request.data["b"])
@@ -1102,7 +1069,6 @@ def addition_by_post(request):
         else:
             response_obj = ResponseClass(400, "a and b cannot be empty")
             return JsonResponse(response_obj.__dict__, status=400)
-
     except KeyError as e:
             response_obj = ResponseClass(400, "no field called a nad b")
             return JsonResponse(response_obj.__dict__, status=400)
@@ -1116,16 +1082,13 @@ def rand_ques_generator(request):
         question_number  = int(request.META.get('HTTP_A'))
         question_type    = request.META.get('HTTP_TYPE')
 
-        if question_number>0 and question_number<11 and question_type:
-             
+        if question_number>0 and question_number<11 and question_type: 
             dict_data = question(question_type, question_number )
-        
             response_obj = ResponseClass(200, "Add Successful",dict_data)
             return JsonResponse(response_obj.__dict__, status=200)
         else:
             response_obj = ResponseClass(400, "question and question type cannot be empty,or zero, or greater than 10")
             return JsonResponse(response_obj.__dict__, status=400)
-
     except KeyError as e:
             response_obj = ResponseClass(400, "no field called question and question_type")
             return JsonResponse(response_obj.__dict__, status=400)   
@@ -1143,15 +1106,12 @@ def rand_ques_generator_with_text_explanation(request):
         question_version = request.META.get('HTTP_VERSION')
 
         if question_number>0 and question_number<11 and question_type or question_version:
-             
             dict_data = question_with_text_exp(question_type, question_number,question_version)
-        
             response_obj = ResponseClass(200, "Add Successful",dict_data)
             return JsonResponse(response_obj.__dict__, status=200)
         else:
             response_obj = ResponseClass(400, "question and question type cannot be empty,or zero, or greater than 10")
             return JsonResponse(response_obj.__dict__, status=400)
-
     except KeyError as e:
             response_obj = ResponseClass(400, "no field called question and question_type")
             return JsonResponse(response_obj.__dict__, status=400)   
@@ -1170,7 +1130,6 @@ def counting_pictures(request):
                 num_01 = random.randint(1,10)
                 num_02 = random.randint(1,10)
                 object_num = random.randint(0,5)
-
                 object = object_list[object_num]
                 ans = num_01 + num_02
                 dicct = {
@@ -1184,7 +1143,6 @@ def counting_pictures(request):
         else:
             response_obj = ResponseClass(400, "input cannot be zero, or greater than 10")
             return JsonResponse(response_obj.__dict__, status=400)
-
     except KeyError as e:
             response_obj = ResponseClass(400, "no field for number")
             return JsonResponse(response_obj.__dict__, status=400)   
@@ -1192,15 +1150,12 @@ def counting_pictures(request):
 ################################ Count_pictures_and_add_section end ######################
 
 #################################### Fraction_Section ###################################
-
 @api_view(['GET'])
 def fraction_question_generator(request):
     try:
         num_of_ques = int(request.META.get('HTTP_NUMBERS'))
         if num_of_ques > 0 and num_of_ques <11:
-            
             dict_data = {}
-            
             for i in range(num_of_ques):
                 fraction_output = fraction_question()
                 dict_data[i] = fraction_output
@@ -1210,7 +1165,6 @@ def fraction_question_generator(request):
         else:
             response_obj = ResponseClass(400, "input cannot be zero, or greater than 10")
             return JsonResponse(response_obj.__dict__, status=400)
-
     except KeyError as e:
             response_obj = ResponseClass(400, "no field specified")
             return JsonResponse(response_obj.__dict__, status=400) 
@@ -1222,7 +1176,6 @@ def fraction_question_generator(request):
 def obtaining_objects(request):
     try:
         question = str(request.META.get('HTTP_QUESTION'))
-    
         if question:
             if text_to_picture.validate_question(question):
                 operation = text_to_picture.find_operation(question)
@@ -1242,7 +1195,6 @@ def obtaining_objects(request):
         else:
             response_obj = ResponseClass(400, "Question can not be empty")
             return JsonResponse(response_obj.__dict__, status=400)
-
     except KeyError as e:
             response_obj = ResponseClass(400, "no field called question")
             return JsonResponse(response_obj.__dict__, status=400)
@@ -1252,11 +1204,7 @@ def obtaining_objects(request):
 def LCM_numbers(request):
     try:
         list_a ="".join(request.META.get('HTTP_LIST'))
-
-        
         integer_list = ast.literal_eval(list_a)
-        
-        
         if len(integer_list)>1 and len(integer_list)<5:
             nums_base_copy,storing_output_arr,answer_set,answer  = lcm_numbers(integer_list)
             c = [
@@ -1266,14 +1214,11 @@ def LCM_numbers(request):
                     "Answer":answer
                 }
             ] 
-            
             response_obj = ResponseClass(200, "Add Successful",c)
             return JsonResponse(response_obj.__dict__, status=200)
         else:
             response_obj = ResponseClass(400, "list cannot be empty, pass two to four numbers list")
             return JsonResponse(response_obj.__dict__, status=400)
-
     except KeyError as e:
             response_obj = ResponseClass(400, "no field called list")
-            return JsonResponse(response_obj.__dict__, status=400)
-                       
+            return JsonResponse(response_obj.__dict__, status=400)                     
