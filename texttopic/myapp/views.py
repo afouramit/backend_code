@@ -239,47 +239,50 @@ def text_explanation(answer,question_type,obj_extractor,version=None):
         return ques,text_exp 
         
     if question_type == "subtraction":
-        object = obj_extractor["objects"][0]
-        num_01 = obj_extractor['numbers'][0]
-        num_02 = obj_extractor['numbers'][1]
-        numbers_in_words = ""
-        numbers_to_be_sub = ""
-        number_word_list = ["one","two","three","four","five","six","seven","eight","nine","ten","eleven","twelve","thirteen","fourteen","fifteen","sixteen","seventeen","eighteen","nineteen","twenty"]
-        for i in range(answer):
-            numbers_in_words += " "+number_word_list[i]+","
-        for i in range(int(num_02)):
-            numbers_to_be_sub += " "+number_word_list[i]+","    
-        text = f"Of the given quantity, when something is  given away, this represents reduction in the existing quantity, is called subtraction and is represented by - sign. We see all {num_01} {object} in the plate as shown. {num_02} {object} were given from this. We will scratch one {object} for every {object} being given away. Now the unscratched {object} are remaining. Let us count these remaining {object}.{numbers_in_words} This count will represent {num_01} minus {num_02} gives {answer} . So after giving away {num_02} {object} from {num_01} {object} what we get is {answer} {object}, which is the answer."
-        text_exp ={
-            0 : {
-                    "commentary" : "Of the given quantity, when something is given away, represents, reduction in existing quantity, is called subtraction, and is represented by minus sign.",
-                    "call_to_action" : "Only the question will be show on the screen, and at the end of the commentary,'-' sign will be displayed."
-                },
-            1 : {
-                    "commentary" : f"We see all {num_01} {object} on the mat as shown.",
-                    "call_to_action" :f"A mat is shown with {num_01} {object} on it."
-                },  
-            2 : {
-                    "commentary" : f"We will scratch one {object} for every {object} being given. Since {num_02} {object} were given, we will scratch {num_02} {object} from {num_01} {object}.",
-                    "call_to_action" : f"Show {num_02} {object}, to be scratched, beside the mat."
-                },        
-            3 : {
-                    "commentary" : f"We will start scratching and counting {object} one-by-one. Lets start, {numbers_to_be_sub}.",
-                    "call_to_action" : f"Start scratching {num_02} {object} from overall {object} on mat1. And display number from 1 till {num_02}, everytime we scratch a {object}."
-                }, 
-            4 : {
-                    "commentary" : f"Now the unstratched {object} forms the answer to the question.",
-                    "call_to_action" : f"mat1, shows, scratched and unscratched {object}."
-                },
-            5 : {
-                    "commentary" : f"Let us count these remaining {object}.{numbers_in_words}",
-                    "call_to_action" : f"Visual should show the count ."
-                }, 
-            6 : {
-                    "commentary" : f"So the answer after subtrcting {num_02} {object} from {num_01} {object} we get {answer} {object}.",
-                    "call_to_action" : f"Display {answer} on the screen ."
-                },                 
-        }    
+        if version == '2':
+            extracted_objects = obj_extractor
+            num_01 = extracted_objects['numbers'][0]
+            num_02 = extracted_objects['numbers'][1]
+            object = extracted_objects['objects'][0]
+            first_name = extracted_objects['names'][0]
+
+            ques = f"There are {num_01} {object} in the basket.{first_name} took {num_02} {object} from it. How many {object} are remaining?"
+
+            text_exp ={
+                0 : {
+                        "commentary" : f"We can see that there are some {object} in the basket and they are {num_01} {object}.",
+                    },
+                1 : {
+                        "commentary" : f"{first_name}  took {num_02} {object} from this basket.",
+                    },  
+                2 : {
+                        "commentary" : f"To find the remaining {object} we need to take out {num_02} {object} from {num_01} {object}.",
+                    },        
+                3 : {
+                        "commentary" : f"while we remove {num_02} {object} from basket, the {object} in the basket are decreasing.",      
+                    }, 
+                4 : {
+                        "commentary" : f"Now we see the remaining {object} in the basket.",      
+                    }, 
+                5 : {
+                        "commentary" : f"Let us understand the meaning of this action. We are removing {object} from the basket. Thus the {object} remaining in the basket are getting reduced. Taking out something, giving away, being used, being consumed, separating out, being damaged, being eaten, being thrown away etc. all such similar actions reduce the original quantity.This is called subtraction",      
+                    }, 
+                6 : {
+                        "commentary" : f"Now let us count the remaining {object} in the basket one by one. ",      
+                    }, 
+                7 : {
+                        "commentary" : f"Therefore the remaining {object} are {answer}",      
+                    },    
+                8: {
+                        "commentary" : f"Mathematically this is represented as {num_01} - {num_02} = {answer}. ",      
+                    },  
+                9: {
+                        "commentary" : f"This sign is called minus and it represents the process of subtraction, or we simply call it as subtraction. ",      
+                    },                               
+            } 
+
+        return ques,text_exp     
+    
     if question_type == "multiplication":
         object = obj_extractor["objects"][0]
         num_01 = int(obj_extractor['numbers'][0])
@@ -524,6 +527,23 @@ def question_with_text_exp(question_type, question_number, version = None ):
             question_add.update({'Text_Explanation':txt_explanation})
             lst_add.append(question_add)
         return lst_add
+    
+    elif question_type == "subtraction":
+        lst_sub = []
+        for i  in range(question_number):
+            question_sub = {}
+            text, difference = random_question_generator_subtract()
+            obj_extractor = numbers_and_object_extracor(text)
+            ques,txt_explanation = text_explanation(difference,question_type,obj_extractor,version)
+            question_sub.update({'Question':ques})
+            question_sub.update({'Answer':difference})
+            question_sub.update({'Version':version})
+            question_sub.update({'question_type':question_type})
+            question_sub.update({'Objects':obj_extractor})
+            question_sub.update({'Text_Explanation':txt_explanation})
+            lst_sub.append(question_sub)  
+        return lst_sub
+    
     elif question_type == "multiplication":
         lst_multi = []
         for i  in range(question_number):
@@ -538,20 +558,7 @@ def question_with_text_exp(question_type, question_number, version = None ):
             lst_multi.append(question_multi)
             
         return lst_multi
-    elif question_type == "subtraction":
-        lst_sub = []
-        for i  in range(question_number):
-            question_sub = {}
-            text, difference = random_question_generator_subtract()
-            question_sub.update({'Question':text})
-            question_sub.update({'Answer':difference})
-            obj_extractor = numbers_and_object_extracor(text)
-            question_sub.update({'Objects':obj_extractor})
-            txt_explanation = text_explanation(difference,question_type,obj_extractor)
-            question_sub.update({'Text_Explanation':txt_explanation})
-            lst_sub.append(question_sub)
-            
-        return lst_sub
+    
     elif question_type == "division":
         lst_div = []
         for i  in range(question_number):
