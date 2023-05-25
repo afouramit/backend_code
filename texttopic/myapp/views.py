@@ -195,7 +195,7 @@ def text_explanation(answer,question_type,obj_extractor,version=None):
                         "commentary" : f"Mathematically this is represented as",      
                     }, 
                 6 : {
-                        "commentary" : f"This sign is called equal to and it represents total.",      
+                        "commentary" : f"This sign is called equal to and it represents result.",      
                     }, 
                 7 : {
                         "commentary" : f"So the total number of {object} are {int(num_01) + int(num_02)}.",      
