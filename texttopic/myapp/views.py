@@ -239,6 +239,39 @@ def text_explanation(answer,question_type,obj_extractor,version=None):
         return ques,text_exp 
         
     if question_type == "subtraction":
+        if version == '1':
+            extracted_objects = obj_extractor
+            num_01 = extracted_objects['numbers'][0]
+            num_02 = extracted_objects['numbers'][1]
+            object = extracted_objects['objects'][0]
+            
+
+            ques = f"There are some {object} in the basket.Some {object} were given away and are shown as scratched {object}. How many {object} are remaining?"
+
+            text_exp ={
+                0 : {
+                        "commentary" : f"There are some {object} in the basket. some of them were given away and are shown as scratched {object}.",
+                    },
+                1 : {
+                        "commentary" : f"Let us understand the meaning of this action.",
+                    },  
+                2 : {
+                        "commentary" : f"Of the given quantity, when something is removed, taken away, broken, something is eaten, damaged, given away, lost, used, consumed, etc. we know that all such processes reduce the original quantity.",
+                    },        
+                3 : {
+                        "commentary" : f"And this process is called subtraction .",      
+                    }, 
+                4 : {
+                        "commentary" : f"Now the {object} which are not scratched are the  remaining {object} and we see them in the basket.Here we have removed the {object} which are already given away.",      
+                    }, 
+                5 : {
+                        "commentary" : f" Now let us count the remaining {object}",      
+                    }, 
+                6 : {
+                        "commentary" : f"Therefore the remaining {object} are {answer} is the answer ",      
+                    },                               
+            } 
+
         if version == '2':
             extracted_objects = obj_extractor
             num_01 = extracted_objects['numbers'][0]
