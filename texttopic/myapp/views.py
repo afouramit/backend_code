@@ -246,14 +246,14 @@ def text_explanation(answer,question_type,obj_extractor,version=None):
             object = extracted_objects['objects'][0]
             
 
-            ques = f"There are some {object} in the basket.Some {object} were given away and are shown as scratched {object}. How many {object} are remaining?"
+            ques = f"There are some {object} in the basket.Some {object} were given away and are shown as highlighted {object}. How many {object} are remaining?"
 
             text_exp ={
                 0 : {
-                        "commentary" : f"There are some {object} in the basket. some of them were given away and are shown as scratched {object}.",
+                        "commentary" : f"There are some {object} in the basket. some of them were given away and are shown as highlighted {object}.",
                     },
                 1 : {
-                        "commentary" : f"Let us understand the meaning of this action.",
+                        "commentary" : f"Let us understand the meaning of this action .",
                     },  
                 2 : {
                         "commentary" : f"Of the given quantity, when something is removed, taken away, broken, something is eaten, damaged, given away, lost, used, consumed, etc. we know that all such processes reduce the original quantity.",
@@ -262,7 +262,7 @@ def text_explanation(answer,question_type,obj_extractor,version=None):
                         "commentary" : f"And this process is called subtraction .",      
                     }, 
                 4 : {
-                        "commentary" : f"Now the {object} which are not scratched are the  remaining {object} and we see them in the basket.Here we have removed the {object} which are already given away.",      
+                        "commentary" : f"Now the {object} which are not highlighted are the  remaining {object} and we see them in the basket .Here we have removed the {object} which are already given away.",      
                     }, 
                 5 : {
                         "commentary" : f" Now let us count the remaining {object}",      
