@@ -298,7 +298,7 @@ def text_explanation(answer,question_type,obj_extractor,version=None):
                         "commentary" : f"Now we see the remaining {object} in the basket.",      
                     }, 
                 5 : {
-                        "commentary" : f"Let us understand the meaning of this action. We are removing {object} from the basket. Thus the {object} remaining in the basket are getting reduced. Taking out something, giving away, being used, being consumed, separating out, being damaged, being eaten, being thrown away etc. all such similar actions reduce the original quantity.This is called subtraction",      
+                        "commentary" : f"Let us understand the meaning of this action. We are removing {object} from the basket. Thus the {object} remaining in the basket are getting reduced. Taking out something, giving away, being used, being consumed, separating out, being damaged, being eaten, being thrown away etc. all such similar actions decreases the original quantity.This is called subtraction",      
                     }, 
                 6 : {
                         "commentary" : f"Now let us count the remaining {object} in the basket one by one. ",      
@@ -313,7 +313,81 @@ def text_explanation(answer,question_type,obj_extractor,version=None):
                         "commentary" : f"This sign is called minus and it represents the process of subtraction, or we simply call it as subtraction. ",      
                     },                               
             } 
+        if version == '3':
+            extracted_objects = obj_extractor
+            num_01 = extracted_objects['numbers'][0]
+            num_02 = extracted_objects['numbers'][1]
+            object = extracted_objects['objects'][0]
+            
 
+            ques = f"{num_01} - {num_02} = ?"
+
+            text_exp ={
+                0 : {
+                        "commentary" : f"Here minus sign indicates subtraction.",
+                    },
+                1 : {
+                        "commentary" : f"We are already aware, that when something is being taken out, giving away, being used, being consumed, separated out, being damaged, being eaten, being thrown away and such similar actions leads to process of Subtraction.",
+                    },  
+                2 : {
+                        "commentary" : f"Here in all these actions, remaining quantity is always less than the original quantity and original quantity gets reduced.",
+                    },        
+                3 : {
+                        "commentary" : f"This is a Subtraction problem.To find the answer for this we need to subtract {num_02} from {num_01}. This is same as taking out {num_02} things from {num_01} things and then count remaining to get the answer.",      
+                    }, 
+                4 : {
+                        "commentary" : f"For example, Let Radhika has {num_01} {object} in the basket.",      
+                    }, 
+                5 : {
+                        "commentary" : f" Rosy took out {num_02} {object} from the basket for herself. To find the remaining {object}, let us take away {num_02} {object} from {num_01} {object}. ",      
+                    }, 
+                6 : {
+                        "commentary" : f"After removing {num_02} {object}, the remaining {object} in the basket will be the answer. So, let us count these remaining {object}.Therefore the remaining {object} are {answer} is the answer ",      
+                    },                               
+            } 
+
+        if version == '4':
+            extracted_objects = obj_extractor
+            num_01 = extracted_objects['numbers'][0]
+            num_02 = extracted_objects['numbers'][1]
+            object = extracted_objects['objects'][0]
+            first_name = extracted_objects['names'][0]
+
+            ques = f"One shop has {num_01} {object}. Out of those {num_02} {object} were sold. How many {object} are left in the shop?"
+
+            text_exp ={
+                0 : {
+                        "commentary" : f"There are {num_01} {object}.",
+                    },
+                1 : {
+                        "commentary" : f"Out of these {num_01} {object}, {num_02} were sold.",
+                    },  
+                2 : {
+                        "commentary" : f"To find remaining {object}, we need to remove those {object} which were sold.",
+                    },        
+                3 : {
+                        "commentary" : f"We will highlight the {num_02} sold {object}.",      
+                    }, 
+                4 : {
+                        "commentary" : f"As we have highlighted the {num_02} sold {object}, this is a subtraction. Thus it is a subtraction of {num_02} from {num_01}.",      
+                    }, 
+                5 : {
+                        "commentary" : f"There are 2 methods by which this can be done.",      
+                    }, 
+                6 : {
+                        "commentary" : f"To find the remaining {object}, we can count the number of {object} which are not highlighted. And they come out to be {answer}. And mathematically can be written as {num_01}   -   {num_02}   =   {answer} is the answer. ",      
+                    }, 
+                7 : {
+                        "commentary" : f"Out of {num_01} {object}, it is given that {num_02} were sold. It means we still have some {object} left. So, we will start counting only non-highlighted from {num_02} onwards till we count all.",      
+                    },    
+                8: {
+                        "commentary" : f"Therefore there are {answer} {object} remained in the shop, is the answer.",      
+                    },  
+                9: {
+                        "commentary" : f" It can be written mathematically as, {num_01}   -   {num_02}   =   {answer} is the answer. ",      
+                    },                               
+            } 
+    
         return ques,text_exp     
     
     if question_type == "multiplication":
@@ -375,7 +449,8 @@ def division():
 
 def random_question_generator_add():
     names_list = ["Anil","Sunil","Shyam","Ronit","Vinshnu","Fahad","Nitin","Josh","Rahul","Amit"]
-    objects_list = ["Apples","Oranges","Bats","Balls","Pens","Books","Bears","Cupcakes","Donuts","Lanterns","Toys","Ducks"]
+    # objects_list = ["Apples","Oranges","Bats","Balls","Pens","Books","Bears","Cupcakes","Donuts","Lanterns","Toys","Ducks"]
+    objects_list = ["Apples","Oranges","Bats","Balls","Pens","Books","Cupcakes","Donuts","Lanterns","Toys"]
     # ["Apples", "Oranges", "Bats", "Balls", "Books"]
     text = Add_question
     
