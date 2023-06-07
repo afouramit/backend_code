@@ -342,8 +342,11 @@ def text_explanation(answer,question_type,obj_extractor,version=None):
                         "commentary" : f" Rosy took out {num_02} {object} from the basket for herself. To find the remaining {object}, let us take away {num_02} {object} from {num_01} {object}. ",      
                     }, 
                 6 : {
-                        "commentary" : f"After removing {num_02} {object}, the remaining {object} in the basket will be the answer. So, let us count these remaining {object}.Therefore the remaining {object} are {answer} is the answer ",      
-                    },                               
+                        "commentary" : f"After removing {num_02} {object}, the remaining {object} in the basket will be the answer. So, let us count these remaining {object}.",      
+                    },
+                7 : {
+                        "commentary" : f"Therefore the remaining {object} are {answer} is the answer "
+                    },                                   
             } 
 
         if version == '4':
