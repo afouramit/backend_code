@@ -108,7 +108,7 @@ def text_explanation(answer,question_type,obj_extractor,version=None):
             start = int(num_01)
             end = int(num_01) + int(num_02)
 
-            numbers = [str(num) for num in range(start, end + 1)]
+            numbers = [str(num) for num in range(start+1, end + 1)]
             result = ','.join(numbers)
 
             ques = f"{num_01} + {num_02} = ?"
