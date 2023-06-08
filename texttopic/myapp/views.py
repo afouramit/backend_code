@@ -98,7 +98,54 @@ Div_question = "Anand has 9 stickers. He distrubted among 3 children. How much s
 def text_explanation(answer,question_type,obj_extractor,version=None):
     
     if question_type == "addition":
-        if version == '4':
+        
+        if version == '5':
+            extracted_objects = obj_extractor
+            num_01 = extracted_objects['numbers'][0]
+            num_02 = extracted_objects['numbers'][1]
+            object = extracted_objects['objects'][0]
+
+            ques = f"{num_01} + {num_02} = ?"
+
+            text_exp ={
+                        0 : {
+                                "commentary" : f"We are asked to find out {num_01} + {num_02} = how much?",
+                            },
+                        1 : {
+                                "commentary" : f"We know that addition is bringing things together or mixing them. It means we will mix  or add {num_02} objects to {num_01} objects and count the total.",
+                            },  
+                        2 : {
+                                "commentary" : f"We already have {num_01} objects & after adding {num_02} more they will increase by {num_02}.Counting all of them together will give us the answer.",
+                            },        
+                        3 : {
+                                "commentary" : f"To achieve this we will count {num_02} ahead of {num_01}.",  
+                            }, 
+                        4 : {
+                                "commentary" : f"This is called as forward counting. Let us see how we can do this .",  
+                            }, 
+                        5 : {
+                                "commentary" : f"We have {num_01}. We want to further count {num_02} more.This process can be done in 2 ways.",  
+                            }, 
+                        6 : {
+                                "commentary" : f"Method 1: We will count further by one every time which is same as adding one.This will be done as many times equal to the number to be added. Let us repeat it {num_02} times as we are to add {num_02}.",  
+                            },   
+                        7 : {
+                                "commentary" : f"This way we have added one {num_02} times to {num_01} to get the answer as {num_01}+{num_02}={answer}",  
+                            }, 
+                        8 : {
+                                "commentary" : f"Method 2: Alternatively we can do the same addition as follows. We will start with {num_01} and count {num_02} numbers forward to get the answer.",  
+                            },   
+                        9 : {
+                                "commentary" : f"Thus we have added {num_02} to {num_01} to get the answer, as {answer}. Thus our answer is {answer} and is written as {num_01}+{num_02}={answer}",  
+                            },
+                        10 : {
+                                "commentary" : f"Thus {num_01}+{num_02} is found out by counting {num_02} ahead of {num_01}.",  
+                            },   
+                        11 : {
+                                "commentary" : f"This is called as forward counting.",  
+                            },                             
+                    }
+        elif version == '4':
             extracted_objects = obj_extractor
             num_01 = extracted_objects['numbers'][0]
             num_02 = extracted_objects['numbers'][1]
