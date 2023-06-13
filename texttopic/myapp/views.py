@@ -124,7 +124,7 @@ def text_explanation(answer,question_type,obj_extractor,version=None):
                                 "commentary" : f"We already have {num_01} objects & after adding {num_02} more they will increase by {num_02}.Counting all of them together will give us the answer.",
                             },        
                         3 : {
-                                "commentary" : f"To achieve this we will count {num_02} ahead of {num_01}. i.e {result}",  
+                                "commentary" : f"To achieve this we will count {num_02} ahead of {num_01}. That is {result}",  
                             }, 
                         4 : {
                                 "commentary" : f"This is called as forward counting. Let us see how we can do this .",  
@@ -145,7 +145,7 @@ def text_explanation(answer,question_type,obj_extractor,version=None):
                                 "commentary" : f"Thus we have added {num_02} to {num_01} to get the answer, as {answer}. Thus our answer is {answer} and is written as {num_01}+{num_02}={answer}",  
                             },
                         10 : {
-                                "commentary" : f"Thus {num_01}+{num_02} is found out by counting {num_02} ahead of {num_01}. i.e {result}",  
+                                "commentary" : f"Thus {num_01}+{num_02} is found out by counting {num_02} ahead of {num_01}. That is {result}",  
                             },   
                         11 : {
                                 "commentary" : f"This is called as forward counting.",  
