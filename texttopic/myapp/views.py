@@ -422,7 +422,7 @@ def text_explanation(answer,question_type,obj_extractor,version=None):
                         "commentary" : f"To find remaining {object}, we need to remove those {object} which were sold.",
                     },        
                 3 : {
-                        "commentary" : f"We will highlight the {num_02} sold {object}.",      
+                        "commentary" : f"We will cross the {num_02} sold {object}.",      
                     }, 
                 4 : {
                         "commentary" : f"As we have crossed the {num_02} sold {object}, this is a subtraction. Thus it is a subtraction of {num_02} from {num_01}.",      
