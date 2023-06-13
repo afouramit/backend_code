@@ -299,11 +299,11 @@ def text_explanation(answer,question_type,obj_extractor,version=None):
             object = extracted_objects['objects'][0]
             
 
-            ques = f"There are some {object} in the basket.Some {object} were given away and are shown as highlighted {object}. How many {object} are remaining?"
+            ques = f"There are some {object} in the basket.Some {object} were given away and are shown as crossed {object}. How many {object} are remaining?"
 
             text_exp ={
                 0 : {
-                        "commentary" : f"There are some {object} in the basket. some of them were given away and are shown as highlighted {object}.",
+                        "commentary" : f"There are some {object} in the basket. some of them were given away and are shown as crossed {object}.",
                     },
                 1 : {
                         "commentary" : f"Let us understand the meaning of this action .",
@@ -315,7 +315,7 @@ def text_explanation(answer,question_type,obj_extractor,version=None):
                         "commentary" : f"And this process is called subtraction .",      
                     }, 
                 4 : {
-                        "commentary" : f"Now the {object} which are not highlighted are the  remaining {object} and we see them in the basket .Here we have removed the {object} which are already given away.",      
+                        "commentary" : f"Now the {object} which are not crossed are the  remaining {object} and we see them in the basket .Here we have removed the {object} which are already given away.",      
                     }, 
                 5 : {
                         "commentary" : f" Now let us count the remaining {object}",      
@@ -425,16 +425,16 @@ def text_explanation(answer,question_type,obj_extractor,version=None):
                         "commentary" : f"We will highlight the {num_02} sold {object}.",      
                     }, 
                 4 : {
-                        "commentary" : f"As we have highlighted the {num_02} sold {object}, this is a subtraction. Thus it is a subtraction of {num_02} from {num_01}.",      
+                        "commentary" : f"As we have crossed the {num_02} sold {object}, this is a subtraction. Thus it is a subtraction of {num_02} from {num_01}.",      
                     }, 
                 5 : {
                         "commentary" : f"There are 2 methods by which this can be done.",      
                     }, 
                 6 : {
-                        "commentary" : f"Method 1: To find the remaining {object}, we can count the number of {object} which are not highlighted. And they come out to be {answer}. And mathematically can be written as {num_01}   -   {num_02}   =   {answer} is the answer. ",      
+                        "commentary" : f"Method 1: To find the remaining {object}, we can count the number of {object} which are not crossed. And they come out to be {answer}. And mathematically can be written as {num_01}   -   {num_02}   =   {answer} is the answer. ",      
                     }, 
                 7 : {
-                        "commentary" : f"Method 2: Out of {num_01} {object}, it is given that {num_02} were sold. It means we still have some {object} left. So, we will start counting only non-highlighted from {num_02} onwards till we count all.",      
+                        "commentary" : f"Method 2: Out of {num_01} {object}, it is given that {num_02} were sold. It means we still have some {object} left. So, we will start counting only non-crossed from {num_02} onwards till we count all.",      
                     },    
                 8: {
                         "commentary" : f"Therefore there are {answer} {object} remained in the shop, is the answer.",      
