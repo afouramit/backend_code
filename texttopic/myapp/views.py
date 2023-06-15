@@ -431,15 +431,18 @@ def text_explanation(answer,question_type,obj_extractor,version=None):
                         "commentary" : f"There are 2 methods by which this can be done.",      
                     }, 
                 6 : {
-                        "commentary" : f"Method 1: To find the remaining {object}, we can count the number of {object} which are not crossed. And they come out to be {answer}. And mathematically can be written as {num_01}   -   {num_02}   =   {answer} is the answer. ",      
-                    }, 
-                7 : {
-                        "commentary" : f"Method 2: Out of {num_01} {object}, it is given that {num_02} were sold. It means we still have some {object} left. So, we will start counting only non-crossed from {num_02} onwards till we count all.",      
-                    },    
+                        "commentary" : f"Method 1: To find the remaining {object}, we can count the number of {object} which are not crossed. And they come out to be",
+                    },
+                7: {
+                    "commentary": f"And mathematically can be written as {num_01}   -   {num_02}   =   {answer} is the answer.",
+                },
                 8: {
+                        "commentary" : f"Method 2: Out of {num_01} {object}, it is given that {num_02} were sold. It means we still have some {object} left. So, we will start counting only non-crossed from {num_02} onwards till we count all.",
+                    },
+                9: {
                         "commentary" : f"Therefore there are {answer} {object} remained in the shop, is the answer.",      
                     },  
-                9: {
+                10: {
                         "commentary" : f" It can be written mathematically as, {num_01}   -   {num_02}   =   {answer} is the answer. ",      
                     },                               
             } 
