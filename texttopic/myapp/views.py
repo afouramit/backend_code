@@ -490,7 +490,7 @@ def text_explanation(answer,question_type,obj_extractor,version=None):
                         "commentary" : f"So, from {int(num_02)+1} to {num_01} we can see that {answer} numbers are remaining and we get the answer as {answer} and is written as {num_01} - {num_02} = {answer}"
                     },  
                 11 : {
-                        "commentary" : f"Method 2 is {num_01} numbers which we have, are 1 to {num_01} as {','.join([str(num) for num in range(1,int(num_01)+1)])} and last {num_02} numbers are removed ending with {num_02}"
+                        "commentary" : f"Method 2 is {num_01} numbers which we have, are 1 to {num_01} as {','.join([str(num) for num in range(1,int(num_01)+1)])} and last {num_02} numbers are removed ending with {num_01}"
                     }, 
                 12 : {
                         "commentary" : f"Then remaining numbers are {','.join([str(num) for num in range(1,int(answer)+1)])}"
