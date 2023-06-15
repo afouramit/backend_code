@@ -443,7 +443,51 @@ def text_explanation(answer,question_type,obj_extractor,version=None):
                         "commentary" : f" It can be written mathematically as, {num_01}   -   {num_02}   =   {answer} is the answer. ",      
                     },                               
             } 
-    
+        if version == '5':
+            extracted_objects = obj_extractor
+            num_01 = extracted_objects['numbers'][0]
+            num_02 = extracted_objects['numbers'][1]
+            object = extracted_objects['objects'][0]
+            
+
+            ques = f"{num_01} - {num_02} = ?"
+
+            text_exp ={
+                0 : {
+                        "commentary" : f"The minus Sign between {num_01} and {num_02} indicates that this is a subtraction problem.",
+                    },
+                1 : {
+                        "commentary" : f"We are asked to find out the result when {num_02} is subtracted from {num_01}.",
+                    },  
+                2 : {
+                        "commentary" : f"Subtraction is an action which reduces, removes, decreases the original number.",
+                    },        
+                3 : {
+                        "commentary" : f"Thus, we will remove {num_02} from {num_01}.By doing this {num_01} will get decreased by {num_02}.",      
+                    }, 
+                4 : {
+                        "commentary" : f"We have {num_01} numbers, say from 1 to {num_01} as {','.join([str(num) for num in range(1,int(num_01)+1)])} and {num_02} are to be removed from them.",      
+                    }, 
+                5 : {
+                        "commentary" : f"It can be done in two ways. We can remove first {num_02} numbers beginning from 1 or last {num_02} numbers ending with {num_01}.",      
+                    }, 
+                6 : {
+                        "commentary" : f"Method 1 is removing {num_02} numbers beginning from 1",      
+                    },
+                7 : {
+                        "commentary" : f"We have removed first {num_02} numbers. That is {','.join([str(num) for num in range(1,int(num_02)+1)])} "
+                    },
+                8 : {
+                        "commentary" : f"Now remaining numbers are "
+                    },
+                9 : {
+                        "commentary" : f"Let us count the remaining numbers as"
+                    },
+                10 : {
+                        "commentary" : f"So, from {int(num_02)+1} to {num_02} we can see that {answer} numbers are remaining and we get the answer as 6 and is written as {num_01} - {num_02} = {answer}"
+                    },                                               
+            }  
+
         return ques,text_exp     
     
     if question_type == "multiplication":
