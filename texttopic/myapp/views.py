@@ -24,7 +24,7 @@ translator = Translator()
 
 def generate_audio(text,lang):
     out = translator.translate(text,dest=lang)
-    tts = gTTS(text=out.text, lang=lang)
+    tts = gTTS(text=out.text, lang=lang,slow=True)
     fp = io.BytesIO()
     tts.write_to_fp(fp)
     fp.seek(0)
