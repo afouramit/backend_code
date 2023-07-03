@@ -24,7 +24,7 @@ translator = Translator()
 
 def generate_audio(text,lang):
     out = translator.translate(text,dest=lang)
-    tts = gTTS(text=out.text, lang=lang,slow=True)
+    tts = gTTS(text=out.text, lang=lang,slow=False)
     fp = io.BytesIO()
     tts.write_to_fp(fp)
     fp.seek(0)
@@ -307,7 +307,7 @@ def text_explanation(answer,question_type,obj_extractor,version=None):
                         "commentary" : f"There are some {object} in the basket. some of them were given away and are shown as crossed {object}.",
                     },
                 1 : {
-                        "commentary" : f"Let us understand the meaning of this action .",
+                        "commentary" : f"Let us understand the meaning of this action.",
                     },  
                 2 : {
                         "commentary" : f"Of the given quantity, when something is removed, taken away, broken, something is eaten, damaged, given away, lost, used, consumed, etc. we know that all such processes reduce the original quantity.",
