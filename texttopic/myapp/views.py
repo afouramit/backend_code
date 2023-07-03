@@ -110,6 +110,7 @@ def text_explanation(answer,question_type,obj_extractor,version=None):
 
             numbers = [str(num) for num in range(start+1, end + 1)]
             result = ','.join(numbers)
+            word_numbers = ["zero","one","two","three","four","five","six","seven","eight"]
 
             ques = f"{num_01} + {num_02} = ?"
 
@@ -136,7 +137,7 @@ def text_explanation(answer,question_type,obj_extractor,version=None):
                                 "commentary" : f"Method 1: We will count further by one every time which is same as adding one.This will be done as many times equal to the number to be added. Let us repeat it {num_02} times as we are to add {num_02}.",  
                             },   
                         7 : {
-                                "commentary" : f"This way we have added one {num_02} times to {num_01} to get the answer as {num_01}+{num_02}={answer}",  
+                                "commentary" : f"This way we have added 1 {word_numbers[int(num_02)]} times to {num_01} to get the answer as {num_01}+{num_02}={answer}",  
                             }, 
                         8 : {
                                 "commentary" : f"Method 2: Alternatively we can do the same addition as follows. We will start with {num_01} and count {num_02} numbers forward to get the answer.",  
