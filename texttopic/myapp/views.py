@@ -119,31 +119,31 @@ def text_explanation(answer,question_type,obj_extractor,version=None):
                                 "commentary" : f"We are asked to find out {num_01} + {num_02} = how much?",
                             },
                         1 : {
-                                "commentary" : f"We know that addition is bringing things together or mixing them. It means we will mix  or add {num_02} objects to {num_01} objects and count the total.",
+                                "commentary" : f"We know that addition is bringing things together or mixing them. It means we will mix or add {num_02} objects to {num_01} objects and count the total.",
                             },  
                         2 : {
-                                "commentary" : f"We already have {num_01} objects & after adding {num_02} more they will increase by {num_02}.Counting all of them together will give us the answer.",
+                                "commentary" : f"We already have {num_01} objects & after adding {num_02} more they will increase by {num_02}. Counting all of them together will give us the answer.",
                             },        
                         3 : {
                                 "commentary" : f"To achieve this we will count {num_02} ahead of {num_01}. That is {result}",  
                             }, 
                         4 : {
-                                "commentary" : f"This is called as forward counting. Let us see how we can do this .",  
+                                "commentary" : f"This is called as forward counting. Let us see how we can do this.",  
                             }, 
                         5 : {
-                                "commentary" : f"We have {num_01}. We want to further count {num_02} more.This process can be done in 2 ways.",  
+                                "commentary" : f"We have {num_01}. We want to further count {num_02} more. This process can be done in 2 ways.",  
                             }, 
                         6 : {
-                                "commentary" : f"Method 1: We will count further by one every time which is same as adding one.This will be done as many times equal to the number to be added. Let us repeat it {num_02} times as we are to add {num_02}.",  
+                                "commentary" : f"Method 1: We will count further by one every time which is same as adding one. This will be done as many times equal to the number to be added. Let us repeat it {num_02} times as we are to add {num_02}.",  
                             },   
                         7 : {
-                                "commentary" : f"This way we have added 1 {word_numbers[int(num_02)]} times to {num_01} to get the answer as {num_01}+{num_02}={answer}",  
+                                "commentary" : f"This way we have added 1 {word_numbers[int(num_02)]} times to {num_01} to get the answer as {num_01} + {num_02} = {answer}",  
                             }, 
                         8 : {
                                 "commentary" : f"Method 2: Alternatively we can do the same addition as follows. We will start with {num_01} and count {num_02} numbers forward to get the answer.",  
                             },   
                         9 : {
-                                "commentary" : f"Thus we have added {num_02} to {num_01} to get the answer, as {answer}. Thus our answer is {answer} and is written as {num_01}+{num_02}={answer}",  
+                                "commentary" : f"Thus we have added {num_02} to {num_01} to get the answer, as {answer}. Thus our answer is {answer} and is written as {num_01} + {num_02} = {answer}",  
                             },
                         10 : {
                                 "commentary" : f"Thus {num_01}+{num_02} is found out by counting {num_02} ahead of {num_01}. That is {result}",  
@@ -467,7 +467,7 @@ def text_explanation(answer,question_type,obj_extractor,version=None):
                         "commentary" : f"Subtraction is an action which reduces, removes, decreases the original number.",
                     },        
                 3 : {
-                        "commentary" : f"Thus, we will remove {num_02} from {num_01}.By doing this {num_01} will get decreased by {num_02}.",      
+                        "commentary" : f"Thus, we will remove {num_02} from {num_01}. By doing this {num_01} will get decreased by {num_02}.",      
                     }, 
                 4 : {
                         "commentary" : f"We have {num_01} numbers, say from 1 to {num_01} as {','.join([str(num) for num in range(1,int(num_01)+1)])} and {num_02} are to be removed from them.",      
