@@ -108,8 +108,8 @@ def text_explanation(answer,question_type,obj_extractor,version=None):
             start = int(num_01)
             end = int(num_01) + int(num_02)
 
-            numbers = [str(num) for num in range(start+1, end + 1)]
-            result = ','.join(numbers)
+            numbers = [str(num) for num in range(start + 1, end)]
+            result = ', '.join(numbers) + ' and ' + str(end)
             word_numbers = ["zero","one","two","three","four","five","six","seven","eight"]
 
             ques = f"{num_01} + {num_02} = ?"
@@ -470,7 +470,7 @@ def text_explanation(answer,question_type,obj_extractor,version=None):
                         "commentary" : f"Thus, we will remove {num_02} from {num_01}. By doing this {num_01} will get decreased by {num_02}.",      
                     }, 
                 4 : {
-                        "commentary" : f"We have {num_01} numbers, say from 1 to {num_01} as {','.join([str(num) for num in range(1,int(num_01)+1)])} and {num_02} are to be removed from them.",      
+                        "commentary" : f"We have {num_01} numbers, say from 1 to {num_01} as {', '.join([str(num) for num in range(1, int(num_01))]) + ' and ' + str(num_01)} and {num_02} are to be removed from them.",      
                     }, 
                 5 : {
                         "commentary" : f"It can be done in two ways. We can remove first {num_02} numbers beginning from 1 or last {num_02} numbers ending with {num_01}.",      
@@ -479,7 +479,7 @@ def text_explanation(answer,question_type,obj_extractor,version=None):
                         "commentary" : f"Method 1 is removing {num_02} numbers beginning from 1",      
                     },
                 7 : {
-                        "commentary" : f"We have removed first {num_02} numbers. That is {','.join([str(num) for num in range(1,int(num_02)+1)])} "
+                        "commentary" : f"We have removed first {num_02} numbers. That is {','.join([str(num) for num in range(1,int(num_02))])+ ' and ' + str(num_02)} "
                     },
                 8 : {
                         "commentary" : f"Now remaining numbers are "
@@ -491,10 +491,10 @@ def text_explanation(answer,question_type,obj_extractor,version=None):
                         "commentary" : f"So, from {int(num_02)+1} to {num_01} we can see that {answer} numbers are remaining and we get the answer as {answer} and is written as {num_01} minus {num_02} equals {answer}"
                     },  
                 11 : {
-                        "commentary" : f"Method 2 is {num_01} numbers which we have, are 1 to {num_01} as {','.join([str(num) for num in range(1,int(num_01)+1)])} and last {num_02} numbers are removed ending with {num_01}"
+                        "commentary" : f"Method 2 is {num_01} numbers which we have, are 1 to {num_01} as {', '.join([str(num) for num in range(1, int(num_01))]) + ' and ' + str(num_01)} and last {num_02} numbers are removed ending with {num_01}"
                     }, 
                 12 : {
-                        "commentary" : f"Then remaining numbers are {','.join([str(num) for num in range(1,int(answer)+1)])}"
+                        "commentary" : f"Then remaining numbers are {','.join([str(num) for num in range(1,int(answer))])+ ' and ' + str(answer)}"
                     }, 
                 13 : {
                         "commentary" : f"Now we will count the remaining numbers"
