@@ -23,6 +23,16 @@ from googletrans import Translator
 translator = Translator()
 
 def generate_audio(text,lang):
+    """
+    Given a text and destination language, this function generates audio in that language.
+
+    Input_param:
+        text : input text
+        lang : destination lang. code
+
+    Output_param: 
+        response : audio file
+    """
     out = translator.translate(text,dest=lang)
     tts = gTTS(text=out.text, lang=lang,slow=False)
     fp = io.BytesIO()
@@ -60,6 +70,16 @@ def text_to_speech(request):
 from googletrans import Translator
 translator = Translator()
 def text_to_text_conversion(text,lang):
+    """
+    Given a text and destination language, this function converts sourse text to destination text.
+
+    Input_param:
+        text : input text
+        lang : destination lang. code
+
+    Output_param: 
+        out.text : converted text in destination language 
+    """
     out = translator.translate(text,dest=lang)
     return {"converted_text":out.text}
 
@@ -96,6 +116,19 @@ Multi_question = "Anand has 27 stickers. He bought each of 5 rupees. What is the
 Div_question = "Anand has 9 stickers. He distrubted among 3 children. How much stickers does each child got?"
 
 def text_explanation(answer,question_type,obj_extractor,version=None):
+    """
+    Given a question, generating its solution explanation.
+
+    Input_param:
+        answer : answer of the question under consideration
+        question_type : operation type of the question( i.e. addition or subtraction etc)
+        obj_extractor : dictionary which stores info of object related to the question (i.e. numbers,names,objects)
+        version : version number of the question
+
+    Output_param: 
+        ques : generated quesion
+        text_exp : generated text explanation(solution) of the question
+    """
     
     if question_type == "addition":
         
@@ -553,11 +586,25 @@ def text_explanation(answer,question_type,obj_extractor,version=None):
 
 
 def subs():
+    """
+    helper function for subtraction, it generate and returns the operands needed in subtraction.
+
+    Output_param :
+        Subtrahend : the number being subtracted
+        Minuend    : the number from which we will subtract
+    """
     Subtrahend  = random.randint(2,5)
     Minuend  = random.randint(6,10)
     return Subtrahend ,Minuend 
 
 def division():
+    """
+    helper function for division, it generate and returns the operands needed in division.
+
+    Output_param:
+        Divisor  : Divisor
+        Dividend : Divident
+    """
     lst = [6,8,9,10,12,15,16,18,20,21,24,25]
     Dividend = random.choice(lst)
     while True:
@@ -567,10 +614,16 @@ def division():
             return Divisor,Dividend
 
 def random_question_generator_add():
+    """
+    generating a random addition question by replacing its original numbers, objects and names
+
+    Output_param: 
+        text : generated addition question
+        sum(lst) : answer of the addtion question
+    """
     names_list = ["Anil","Sunil","Shyam","Ronit","Vinshnu","Fahad","Nitin","Josh","Rahul","Amit"]
-    # objects_list = ["Apples","Oranges","Bats","Balls","Pens","Books","Bears","Cupcakes","Donuts","Lanterns","Toys","Ducks"]
     objects_list = ["Apples","Oranges","Bats","Balls","Pens","Books","Cupcakes","Donuts","Lanterns","Toys"]
-    # ["Apples", "Oranges", "Bats", "Balls", "Books"]
+  
     text = Add_question
     
     doc = nlp(Add_question)
@@ -596,8 +649,14 @@ def random_question_generator_add():
     return text, sum(lst)
 
 def random_question_generator_multi():
+    """
+    generating a random multiplication question by replacing its original numbers, objects and names
+
+    Output_param: 
+        text : generated multiplication question
+        multiplication : answer of the multiplication question
+    """
     names_list = ["Anil","Sunil","Shyam","Ronit","Vinshnu","Fahad","Nitin","Josh","Rahul","Amit"]
-    # objects_list = ["Apples","Oranges","Bats","Balls","Pens","Books","Bears","Cupcakes","Donuts","Lanterns","Toys","Ducks"]
     objects_list = ["Apples","Oranges","Bats","Balls","Pens","Books","Cupcakes","Donuts","Lanterns","Toys"]
     text = Multi_question
     
@@ -624,8 +683,14 @@ def random_question_generator_multi():
     return text, multiplication  
 
 def random_question_generator_subtract():
+    """
+    generating a random subtraction question by replacing its original numbers, objects and names
+
+    Output_param: 
+        text : generated subtraction question
+        difference : answer of the subtraction question
+    """
     names_list = ["Anil","Sunil","Shyam","Ronit","Vinshnu","Fahad","Nitin","Josh","Rahul","Amit"]
-    # objects_list = ["Apples","Oranges","Bats","Balls","Pens","Books","Bears","Cupcakes","Donuts","Lanterns","Toys","Ducks"]
     objects_list = ["Apples","Oranges","Bats","Balls","Pens","Books","Cupcakes","Donuts","Lanterns","Toys"]
     text = Sub_question
     
@@ -647,6 +712,13 @@ def random_question_generator_subtract():
     return text , difference
 
 def random_question_generator_divide():
+    """
+    generating a random division question by replacing its original numbers, objects and names
+
+    Output_param: 
+        text : generated division question
+        quotient : answer of the division question
+    """
     names_list = ["Anil","Sunil","Shyam","Ronit","Vinshnu","Fahad","Nitin","Josh","Rahul","Amit"]
     # objects_list = ["Apples","Oranges","Bats","Balls","Pens","Books","Bears","Cupcakes","Donuts","Lanterns","Toys","Ducks"]
     objects_list = ["Apples","Oranges","Bats","Balls","Pens","Books","Cupcakes","Donuts","Lanterns","Toys"]
@@ -662,34 +734,17 @@ def random_question_generator_divide():
     #print(quotient)
     return text, quotient
 
-def lcm_numbers(nums):
-    storing_output_arr = []
-    increment_value = 2
-    nums_base_copy = copy.deepcopy(nums)
-
-    answer_set=[]
-    answer = 1
-
-    while(sum(nums)>len(nums)):
-        nums_copy = copy.deepcopy(nums)
-        value = [ True if i % increment_value == 0 else False for i in nums ]
-        if True in value:
-            storing_output_arr.append((increment_value,nums_copy))
-            answer *= increment_value
-            answer_set.append(increment_value)
-            for i in range(len(nums)):
-                if nums[i] % increment_value == 0:
-                    nums[i] = nums[i] // increment_value  
-                else:
-                    nums[i] = nums[i]      
-
-        else:
-            increment_value += 1
-
-    return nums_base_copy,storing_output_arr,answer_set,answer     
-
 def question(question_type, question_number ):
-    
+    """
+    generating question of given type 
+
+    Input_param :
+        question_type: operation of the question (i.e addition or subtraction)
+        question_number: needed number of question
+
+    Output_param: 
+        lst_ : list contaiing info of question, answer and objects
+    """
     if question_type == "addition":
         lst_add = []
         for i  in range(question_number):
@@ -741,6 +796,17 @@ def question(question_type, question_number ):
         return lst_div
 
 def question_with_text_exp(question_type, question_number, version = None ):
+    """
+    generating question along with their explanation of given type 
+
+    Input_param :
+        question_type: operation of the question (i.e addition or subtraction)
+        question_number: needed number of question
+        version : version of the question
+
+    Output_param: 
+        lst_ : list contaiing info of question, answer and objects, question_type, version and text_explanation
+    """
     if question_type == "addition":
         lst_add = []
         for i  in range(question_number):
@@ -807,6 +873,15 @@ def question_with_text_exp(question_type, question_number, version = None ):
 
 ################################################ number_and_object_extractor ###########
 def numbers_and_object_extracor(question):
+    """
+    Given a question, extracting its numbers, names and objects
+
+    Input_param : 
+        question : input question in a form of sentence
+
+    Output_param : 
+        dicts : a dictionary containing information about numbers, names and objects within the question.    
+    """
     doc = nlp(question)
 
     num_list = []
@@ -1142,6 +1217,8 @@ def naming_fig(request):
     
 
 def naming_figures_single_question(numbers):
+
+    """function for naming figures into different categories"""
     question_list = []
 
     problem_list = [
@@ -1236,80 +1313,6 @@ def convert_pictorial_text_q_to_picture_q(request):
     except KeyError as e:
             response_obj = ResponseClass(400, "no field called image")
             return JsonResponse(response_obj.__dict__, status=400)
-
-###################################### Practice-Starts ################################
-@api_view(['GET'])
-def addition_by_get(request):
-    try:
-        a =request.META.get('HTTP_A')
-        b =request.META.get('HTTP_B')
-        # question = request.data['question']
-        if a and b:
-            c = a+b
-            response_obj = ResponseClass(200, "Add Successful",c)
-            return JsonResponse(response_obj.__dict__, status=200)
-        else:
-            response_obj = ResponseClass(400, "a and b cannot be empty")
-            return JsonResponse(response_obj.__dict__, status=400)
-
-    except KeyError as e:
-            response_obj = ResponseClass(400, "no field called a and b")
-            return JsonResponse(response_obj.__dict__, status=400)
-           
-
-# @api_view(['POST'])
-# def addition_by_post(request):
-#     try:
-#         a =int( request.data["a"])
-#         b =int( request.data["b"])
-#         # question = request.data['question']
-#         if a and b:
-#             c = a+b
-#             dicct = {
-#                 "num1":a,
-#                 "num2":b,
-#                 "ans":c
-#             }
-#             response_obj = ResponseClass(200, "Add Successful",dicct)
-#             return JsonResponse(response_obj.__dict__, status=200)
-#         else:
-#             response_obj = ResponseClass(400, "a and b cannot be empty")
-#             return JsonResponse(response_obj.__dict__, status=400)
-
-    # except KeyError as e:
-    #         response_obj = ResponseClass(400, "no field called a nad b")
-    #         return JsonResponse(response_obj.__dict__, status=400)
-
-
-@api_view(['POST'])
-def addition_by_post(request):
-    try:
-        num_of_ques = int(request.data["num"])
-        if num_of_ques:
-            dict_data = {}
-            # a =int( request.data["a"])
-            # b =int( request.data["b"])
-            # question = request.data['question']
-            for i in range(num_of_ques):
-                a = random.randint(1,10)
-                b = random.randint(1,10)
-                c = a + b
-                dicct = {
-                    "num1":a,
-                    "num2":b,
-                    "answer":c
-                }
-                dict_data[i] = dicct
-            response_obj = ResponseClass(200, "Add Successful",dict_data)
-            return JsonResponse(response_obj.__dict__, status=200)
-        else:
-            response_obj = ResponseClass(400, "a and b cannot be empty")
-            return JsonResponse(response_obj.__dict__, status=400)
-    except KeyError as e:
-            response_obj = ResponseClass(400, "no field called a nad b")
-            return JsonResponse(response_obj.__dict__, status=400)
-################################# Practice-ends #########################################
-
 ################################## Random_Number_Generator_Section ######################
 @api_view(['GET'])
 def rand_ques_generator(request):
@@ -1436,6 +1439,45 @@ def obtaining_objects(request):
             return JsonResponse(response_obj.__dict__, status=400)
 
 ##################################### LCM ###########################################
+def lcm_numbers(nums):
+    """
+    finding LCM of numbers
+
+    Input_param :
+        nums : list of numbers whose LCM needes to be fined
+
+    Output_param :
+        nums_base_copy: passed list
+        storing_output_arr: vertical arrangements
+        answer_set: answer set
+        answer: answer
+         
+    """
+    storing_output_arr = []
+    increment_value = 2
+    nums_base_copy = copy.deepcopy(nums)
+
+    answer_set=[]
+    answer = 1
+
+    while(sum(nums)>len(nums)):
+        nums_copy = copy.deepcopy(nums)
+        value = [ True if i % increment_value == 0 else False for i in nums ]
+        if True in value:
+            storing_output_arr.append((increment_value,nums_copy))
+            answer *= increment_value
+            answer_set.append(increment_value)
+            for i in range(len(nums)):
+                if nums[i] % increment_value == 0:
+                    nums[i] = nums[i] // increment_value  
+                else:
+                    nums[i] = nums[i]      
+
+        else:
+            increment_value += 1
+
+    return nums_base_copy,storing_output_arr,answer_set,answer     
+
 @api_view(['GET'])
 def LCM_numbers(request):
     try:
