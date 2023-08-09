@@ -326,36 +326,39 @@ def text_explanation(answer,question_type,obj_extractor,version=None):
         return ques,text_exp 
         
     if question_type == "subtraction":
+        marathi_obj_dict = {"Apples":"सफरचंद","Oranges":"संत्रा","Bats":"बॅट्स","Balls":"बॉल्स","Pens":"पेन","Books":"पुस्तके","Cupcakes":"कपकेक","Donuts":"डोनट्स","Lanterns":"कंदील","Toys":"खेळणी"}
+
         if version == '1':
             extracted_objects = obj_extractor
             num_01 = extracted_objects['numbers'][0]
             num_02 = extracted_objects['numbers'][1]
             object = extracted_objects['objects'][0]
-            
-
-            ques = f"There are some {object} in the basket.Some {object} were given away and are shown as crossed {object}. How many {object} are remaining?"
+            ques = f"""There are some {object} in the basket.एका टोपलीत काही {marathi_obj_dict[object]} आहेत. Some {object} were given away and are shown as crossed {object}. त्यातील काही {marathi_obj_dict[object]} दिले गेले. दिलेल्या {marathi_obj_dict[object]} तिरपी रेष मारून खोडलेल्या दाखविल्या आहेत. How many {object} are remaining? आता किती {marathi_obj_dict[object]} शिल्लक आहेत"""
 
             text_exp ={
                 0 : {
-                        "commentary" : f"There are some {object} in the basket. some of them were given away and are shown as crossed {object}.",
+                        "commentary" : f"There are some {object} in the basket.एका टोपलीत काही {marathi_obj_dict[object]} आहेत.",
                     },
                 1 : {
-                        "commentary" : f"Let us understand the meaning of this action.",
-                    },  
+                        "commentary" : f"some of them were given away and are shown as crossed {object}.त्यातील काही {marathi_obj_dict[object]} दिले गेले. दिलेल्या {marathi_obj_dict[object]} तिरपी रेष मारून खोडलेल्या दाखविल्या आहेत.",
+                    },     
                 2 : {
-                        "commentary" : f"Of the given quantity, when something is removed, taken away, broken, something is eaten, damaged, given away, lost, used, consumed, etc. we know that all such processes reduce the original quantity.",
-                    },        
+                        "commentary" : f"Let us understand the meaning of this action.आपण या कृतीचा अर्थ समजावून घेऊ",
+                    },  
                 3 : {
-                        "commentary" : f"And this process is called subtraction .",      
-                    }, 
+                        "commentary" : f"Of the given quantity, when something is removed, taken away, broken, something is eaten, damaged, given away, lost, used, consumed, etc. we know that all such processes reduce the original quantity.असलेल्या गोष्टींपैकी काही गोष्टी काढून घेतल्या, तुटल्या, खाल्ल्या, खराब झाल्या, देऊन टाकल्या, हरवल्या, वापरल्या गेल्या, पडल्या, ई. अशा सर्व वेळी असलेल्या वस्तूंची संख्या आधीच्या पेक्षा कमी होते.",
+                    },        
                 4 : {
-                        "commentary" : f"Now the {object} which are not crossed are the  remaining {object} and we see them in the basket .Here we have removed the {object} which are already given away.",      
+                        "commentary" : f"And this process is called subtraction.आणि या कमी होण्याच्या कृतीला आपण वजाबाकी असे म्हणतो.",      
                     }, 
                 5 : {
-                        "commentary" : f" Now let us count the remaining {object}",      
+                        "commentary" : f"Now the {object} which are not crossed are the  remaining {object} and we see them in the basket .Here we have removed the {object} which are already given away.आता ज्या {marathi_obj_dict[object]}वर तिरपी रेषा मारून खोडलेल्या नाहीत अशा {marathi_obj_dict[object]} शिल्लक राहिलेल्या आहेत. आणि फक्त तेवढ्या {marathi_obj_dict[object]} आपल्याला चित्रात दिसत आहेत. येथे आपण दिलेल्या गोळ्या चित्रातून काढून टाकल्या आहेत",      
                     }, 
                 6 : {
-                        "commentary" : f"Therefore the remaining {object} are {answer} is the answer ",      
+                        "commentary" : f" Now let us count the remaining {object}.आता आपण उरलेल्या {marathi_obj_dict[object]} मोजू. ",      
+                    }, 
+                7 : {
+                        "commentary" : f"Therefore the remaining {object} are {answer} is the answer.म्हणून उरलेल्या {marathi_obj_dict[object]} {answer} आहेत हे उत्तर. ",      
                     },                               
             } 
 
@@ -364,40 +367,41 @@ def text_explanation(answer,question_type,obj_extractor,version=None):
             num_01 = extracted_objects['numbers'][0]
             num_02 = extracted_objects['numbers'][1]
             object = extracted_objects['objects'][0]
-            first_name = extracted_objects['names'][0]
+            # first_name = extracted_objects['names'][0]
+            first_name = 'Malati'
 
-            ques = f"There are {num_01} {object} in the basket.{first_name} took {num_02} {object} from it. How many {object} are remaining?"
+            ques = f"There are {num_01} {object} in the basket.एका टोपलीत {num_01} {marathi_obj_dict[object]} आहेत.{first_name} took {num_02} {object} from it.मालतीने त्यातून {num_02} {marathi_obj_dict[object]} घेतली. How many {object} are remaining? किती {marathi_obj_dict[object]} शिल्लक आहेत?"
 
             text_exp ={
                 0 : {
-                        "commentary" : f"We can see that there are some {object} in the basket and they are {num_01} {object}.",
+                        "commentary" : f"We can see that there are some {object} in the basket and they are {num_01} {object}.आपल्याला हे दिसते आहे की टोपलीत {num_01} {marathi_obj_dict[object]} आहेत ",
                     },
                 1 : {
-                        "commentary" : f"{first_name}  took {num_02} {object} from this basket.",
+                        "commentary" : f"{first_name}  took {num_02} {object} from this basket.मालतीने त्या टोपलीतून {num_02} {marathi_obj_dict[object]} घेतली",
                     },  
                 2 : {
-                        "commentary" : f"To find the remaining {object} we need to take out {num_02} {object} from {num_01} {object}.",
+                        "commentary" : f"To find the remaining {object} we need to take out {num_02} {object} from {num_01} {object}.उरलेली {marathi_obj_dict[object]} किती हे शोधण्यासाठी आपल्याला {num_01} मधून {num_02} {marathi_obj_dict[object]} काढून घ्यावी लागतील.",
                     },        
                 3 : {
-                        "commentary" : f"while we remove {num_02} {object} from basket, the {object} in the basket are decreasing.",      
+                        "commentary" : f"{num_02} {object} are taken away.{num_02} {marathi_obj_dict[object]} काढून घेतली",      
                     }, 
                 4 : {
-                        "commentary" : f"Now we see the remaining {object} in the basket.",      
+                        "commentary" : f"Now we see the remaining {object} in the basket.आता आपण पाहू शकतो की टोपलीत उरलेली {marathi_obj_dict[object]} दिसत आहेत",      
                     }, 
                 5 : {
-                        "commentary" : f"Let us understand the meaning of this action. We are removing {object} from the basket. Thus the {object} remaining in the basket are getting reduced. Taking out something, giving away, being used, being consumed, separating out, being damaged, being eaten, being thrown away etc. all such similar actions decreases the original quantity.This is called subtraction",      
+                        "commentary" : f"Let us understand the meaning of this action. We are removing {object} from the basket. Thus the {object} remaining in the basket are getting reduced. Taking out something, giving away, being used, being consumed, separating out, being damaged, being eaten, being thrown away etc. all such similar actions decreases the original quantity.This is called subtraction. आता आपण या कृतीचा अर्थ समजावून घेऊया.आपण टोपलीतून {marathi_obj_dict[object]} काढून घेत आहोत. म्हणून टोपलीत उरलेली {marathi_obj_dict[object]} कमी होत आहेत.काहीतरी काढून घेणे, देऊन टाकणे, देणे, वापरणे, संपवणे, बाजूला काढणे, वेगळे करणे, खराब होणे, नादुरुस्त होणे, खाऊन टाकणे, फेकून देणे, ई. आणि या सारख्या इतर सर्व कृतीमधून मूळ असलेल्या वस्तूंची संख्या कमी होत असते.या सारख्या कृतींना वजाबाकी असे म्हणतात ",      
                     }, 
                 6 : {
-                        "commentary" : f"Now let us count the remaining {object} in the basket one by one. ",      
+                        "commentary" : f"Now let us count the remaining {object} in the basket one by one.आता टोपली मधील उरलेली सगळी {marathi_obj_dict[object]} एक एक करून मोजू. ",      
                     }, 
                 7 : {
-                        "commentary" : f"Therefore the remaining {object} are {answer}",      
+                        "commentary" : f"Remaining {object} are {answer} is the answer.उरलेली {marathi_obj_dict[object]} {answer} आहेत हे उत्तर",      
                     },    
                 8: {
-                        "commentary" : f"Mathematically this is represented as {num_01} - {num_02} = {answer}. ",      
+                        "commentary" : f"Mathematically this is represented as {num_01} - {num_02} = {answer}.गणिती भाषेत हे {num_01} - {num_02} = {answer} असे दाखविले जाते.",      
                     },  
                 9: {
-                        "commentary" : f"This sign is called minus and it represents the process of subtraction, or we simply call it as subtraction. ",      
+                        "commentary" : f"This sign is called minus and it represents the process of subtraction, or we simply call it as subtraction.या - चिन्हाला वजा असे म्हणतात आणि या क्रियेला वजाबाकी करणे अथवा वजाबाकी असे म्हणतात ",      
                     },                               
             } 
         if version == '3':
@@ -411,28 +415,28 @@ def text_explanation(answer,question_type,obj_extractor,version=None):
 
             text_exp ={
                 0 : {
-                        "commentary" : f"Here minus sign indicates subtraction.",
+                        "commentary" : f"We are asked to find {num_01} - {num_02} = ?.Here minus sign indicates subtraction.आपल्याला येथे {num_01} - {num_02} = ? हे शोधायचे आहे.येथे, (-) हे चिन्ह वजाबाकी करायची आहे, असे दाखविते",
                     },
                 1 : {
-                        "commentary" : f"We are already aware, that when something is being taken out, giving away, being used, being consumed, separated out, being damaged, being eaten, being thrown away and such similar actions leads to process of Subtraction.",
+                        "commentary" : f"We are already aware, that when something is being taken out, giving away, being used, being consumed, separated out, being damaged, being eaten, being thrown away and such similar actions leads to process of Subtraction.आपल्याला हे माहिती आहे की, जेव्हा कशातून तरी काही तरी काढून घेतले जाते, दिले जाते, वापरले जाते, संपवले जाते, वेगळे केले जाते, नादुरुस्त होते, खाल्ले जाते, टाकून दिले जाते किंवा अशाच प्रकारे मूळ वस्तूंची संख्या कमी होते, अशा क्रियेला वजाबाकीची क्रिया असे म्हणतात",
                     },  
                 2 : {
-                        "commentary" : f"Here in all these actions, remaining quantity is always less than the original quantity and original quantity gets reduced.",
+                        "commentary" : f"Here in all these actions, remaining quantity is always less than the original quantity and original quantity gets reduced.येथे या सर्व घटनांमध्ये शिल्लक राहिलेल्या वस्तूंची संख्या मूळ वस्तूंच्या संख्येपेक्षा कमी होत असते.",
                     },        
                 3 : {
-                        "commentary" : f"This is a Subtraction problem.To find the answer for this we need to subtract {num_02} from {num_01}. This is same as taking out {num_02} things from {num_01} things and then count remaining to get the answer.",      
+                        "commentary" : f"This is a Subtraction problem.To find the answer for this we need to subtract {num_02} from {num_01}. This is same as taking out {num_02} things from {num_01} things and then count remaining to get the answer.हे वजाबाकीची गणित आहे.याचे उत्तर शोधण्यासाठी आपल्याला {num_01} मधून {num_02} वजा करायला लागेल म्हणजेच आपल्याला {num_01} मधून {num_02} वस्तू काढून टाकाव्या लागतील आणि उरलेल्या वस्तू मोजाव्या लागतील.म्हणजे आपल्याला हवे असलेले उत्तर मिळेल ",      
                     }, 
                 4 : {
-                        "commentary" : f"For example, Let Radhika has {num_01} {object} in the basket.",      
+                        "commentary" : f"For example, Let Radhika has {num_01} {object} in the basket.उदाहरणार्थ राधिकाकडे टोपलीत {num_01} {marathi_obj_dict[object]} आहेत असे मानू",      
                     }, 
                 5 : {
-                        "commentary" : f" Rosy took out {num_02} {object} from the basket for herself. To find the remaining {object}, let us take away {num_02} {object} from {num_01} {object}. ",      
+                        "commentary" : f" Rosy took out {num_02} {object} from the basket for herself. To find the remaining {object}, let us take away {num_02} {object} from {num_01} {object}.रोजीने त्यातून स्वतःसाठी {num_02} {marathi_obj_dict[object]} काढून घेतली.आता किती {marathi_obj_dict[object]} उरली हे शोधण्यासाठी आपण,{num_01} {marathi_obj_dict[object]} मधून {num_02} {marathi_obj_dict[object]} काढून घेऊ. ",      
                     }, 
                 6 : {
-                        "commentary" : f"After removing {num_02} {object}, the remaining {object} in the basket will be the answer. So, let us count these remaining {object}.",      
+                        "commentary" : f"After removing {num_02} {object}, the remaining {object} in the basket will be the answer. So, let us count these remaining {object}.{num_02} {marathi_obj_dict[object]} काढून घेतल्यानंतर जी उरलेली {marathi_obj_dict[object]} आहेत, तेच आपले उत्तर असेल.म्हणून, आता उरलेली {marathi_obj_dict[object]} मोजुया",      
                     },
                 7 : {
-                        "commentary" : f"Therefore the remaining {object} are {answer} is the answer "
+                        "commentary" : f"Therefore the remaining {object} are {answer} is the answer.उरलेली {marathi_obj_dict[object]} = {answer} हे उत्तर  "
                     },                                   
             } 
 
@@ -443,41 +447,41 @@ def text_explanation(answer,question_type,obj_extractor,version=None):
             object = extracted_objects['objects'][0]
             first_name = extracted_objects['names'][0]
 
-            ques = f"One shop has {num_01} {object}. Out of those {num_02} {object} were sold. How many {object} are left in the shop?"
+            ques = f"One shop has {num_01} {object}. Out of those {num_02} {object} were sold. How many {object} are left in the shop?.एका दुकानात {num_01} {marathi_obj_dict[object]} आहे. त्यापैकी {num_02} {marathi_obj_dict[object]} विकले गेले. दुकानात किती {marathi_obj_dict[object]} शिल्लक आहेत?."
 
             text_exp ={
                 0 : {
-                        "commentary" : f"There are {num_01} {object}.",
+                        "commentary" : f"There are {num_01} {object}.दुकानात {num_01} {marathi_obj_dict[object]} आहेत.",
                     },
                 1 : {
-                        "commentary" : f"Out of these {num_01} {object}, {num_02} were sold.",
+                        "commentary" : f"Out of these {num_01} {object}, {num_02} were sold.{num_01} {marathi_obj_dict[object]} पैकी, {num_02} विकले गेले.",
                     },  
                 2 : {
-                        "commentary" : f"To find remaining {object}, we need to remove those {object} which were sold.",
+                        "commentary" : f"To find remaining {object}, we need to remove those {object} which were sold.बाकी {marathi_obj_dict[object]} शोधण्यासाठी, आम्हाला ते {marathi_obj_dict[object]} काढून टाकणे आवश्यक आहे जे विकले गेले होते.",
                     },        
                 3 : {
-                        "commentary" : f"We will cross the {num_02} sold {object}.",      
+                        "commentary" : f"We will cross the {num_02} sold {object}.आम्ही विकलेला {num_02} {marathi_obj_dict[object]}वर फुलीची खूण करू .",      
                     }, 
                 4 : {
-                        "commentary" : f"As we have crossed the {num_02} sold {object}, this is a subtraction. Thus it is a subtraction of {num_02} from {num_01}.",      
+                        "commentary" : f"As we have crossed the {num_02} sold {object}, this is a subtraction.आपण {num_02} {marathi_obj_dict[object]} फुलीची खूण केली याचा अर्थ हे वजाबाकीचे गणित आहे.Thus it is a subtraction of {num_02} from {num_01} and is shown as {num_01} - {num_02} = ?.अशा प्रकारे हे {num_01} मधून {num_02} ची वजाबाकी आहे.आणि {num_01} - {num_02} = ? म्हणून दर्शविले आहे. To find the remaining {object}, we can count the number of {object} which are not crossed.बाकी {marathi_obj_dict[object]} शोधण्यासाठी, आपण ज्या {marathi_obj_dict[object]}वर फुलीची खूण केलेली नाही, अशा {marathi_obj_dict[object]} मोजू. ",      
                     }, 
                 5 : {
-                        "commentary" : f"There are 2 methods by which this can be done.",      
+                        "commentary" : f"There are 2 methods by which this can be done.हे शोधण्यासाठी आपण दोन पद्धती वापरू शकतो ",      
                     }, 
                 6 : {
-                        "commentary" : f"Method 1: To find the remaining {object}, we can count the number of {object} which are not crossed. And they come out to be",
+                        "commentary" : f"Method 1: To find the remaining {object}, we can count the number of {object} which are not crossed.बाकी {marathi_obj_dict[object]} शोधण्यासाठी,चित्रात ज्या {marathi_obj_dict[object]} फुली मारलेली नाही अशा सर्व {marathi_obj_dict[object]} मोजू.And they come out to be {answer}.त्या मोजल्या असता {answer} एवढ्या आहेत.",
                     },
                 7: {
-                    "commentary": f"And mathematically can be written as {num_01}   -   {num_02}   =   {answer} is the answer.",
+                    "commentary": f"Therefore there are {answer} remaining {object}  and mathematically it can be written as, {num_01}   -   {num_02}   =   {answer} is the answer.म्हणजेच बाकी अशा त्या एकूण {answer} {marathi_obj_dict[object]} आहेत.आणि हे लिहिण्याची पद्धत {num_01} - {num_02} = {answer} अशी आहे.",
                 },
                 8: {
-                        "commentary" : f"Method 2: Out of {num_01} {object}, it is given that {num_02} were sold. It means we still have some {object} left. So, we will start counting only non-crossed from {num_02} onwards till we count all.",
+                        "commentary" : f"Method 2: Out of {num_01} {object}, it is given that {num_02} were sold.{num_01} {marathi_obj_dict[object]} पैकी, {num_02} विकले गेले असे दिले आहे.It means we still have some {object} left.याचा अर्थ आमच्याकडे अजून काही {marathi_obj_dict[object]} शिल्लक आहेत.So, we will start counting only non-crossed from {num_02} onwards till we count all.म्हणून, आपण फक्त बाकी सर्व {marathi_obj_dict[object]} मोजू ",
                     },
                 9: {
-                        "commentary" : f"Therefore there are {answer} {object} remained in the shop, is the answer.",      
+                        "commentary" : f"Therefore there are {answer} {object} remained in the shop, is the answer.म्हणजे दुकानात {answer} {marathi_obj_dict[object]} शिल्लक आहेत, हे उत्तर आहे",      
                     },  
                 10: {
-                        "commentary" : f" It can be written mathematically as, {num_01}   -   {num_02}   =   {answer} is the answer. ",      
+                        "commentary" : f" It can be written mathematically as, {num_01}   -   {num_02}   =   {answer} is the answer.गणिती भाषेत हे खालील प्रमाणे लिहिता येते, {num_01} - {num_02} = {answer} हे उत्तर .",      
                     },                               
             } 
         if version == '5':
@@ -492,51 +496,72 @@ def text_explanation(answer,question_type,obj_extractor,version=None):
             text_exp ={
                 0 : {
                         "commentary" : f"The minus Sign between {num_01} and {num_02} indicates that this is a subtraction problem.",
+                        "commentary_marathi" : f"The minus Sign between {num_01} and {num_02} indicates that this is a subtraction problem.{num_01} आणि {num_02} मधील - हे चिन्ह, ही वजाबाकी आहे हे दाखवत आहे.",
                     },
                 1 : {
                         "commentary" : f"We are asked to find out the result when {num_02} is subtracted from {num_01}.",
+                        "commentary_marathi" : f"We are asked to find out the result when {num_02} is subtracted from {num_01}.या गणितात, जेव्हा {num_01} मधून {num_02} वजा करतो तेव्हा उत्तर (वजाबाकी) किती येते हे विचारले आहे.",
                     },  
                 2 : {
                         "commentary" : f"Subtraction is an action which reduces, removes, decreases the original number.",
+                        "commentary_marathi" : f"Subtraction is an action which reduces, removes, decreases the original number.वजाबाकी ही अशी क्रिया आहे की ज्यात मूळ संख्या ही आधीच्या पेक्षा कमी होते.",
+                    
                     },        
                 3 : {
-                        "commentary" : f"Thus, we will remove {num_02} from {num_01}. By doing this {num_01} will get decreased by {num_02}.",      
+                        "commentary" : f"Thus, we will remove {num_02} from {num_01}. By doing this {num_01} will get decreased by {num_02}.", 
+                        "commentary_marathi" : f"Thus, we will remove {num_02} from {num_01}. By doing this {num_01} will get decreased by {num_02}.त्या नुसार आपण {num_01} मधून {num_02} कमी करणार आहोत.हे केल्याने {num_01} ही संख्या {num_02} ने कमी होईल.",      
+                         
                     }, 
                 4 : {
-                        "commentary" : f"We have {num_01} numbers, say from 1 to {num_01} as {', '.join([str(num) for num in range(1, int(num_01))]) + ' and ' + str(num_01)} and {num_02} are to be removed from them.",      
+                        "commentary" : f"We have {num_01} numbers, say from 1 to {num_01} as {', '.join([str(num) for num in range(1, int(num_01))]) + ' and ' + str(num_01)} and {num_02} are to be removed from them.",
+                        "commentary_marathi" : f"We have {num_01} numbers, say from 1 to {num_01} as {', '.join([str(num) for num in range(1, int(num_01))]) + ' and ' + str(num_01)} and {num_02} are to be removed from them.आपल्याकडे पुढे लिहिल्या प्रमाणे 1 ते {num_01} अशा {num_01} संख्या आहेत  {', '.join([str(num) for num in range(1, int(num_01))]) + ' आणि ' + str(num_01)}  आणि यातून {num_02} कमी करायचे आहेत.",             
                     }, 
                 5 : {
-                        "commentary" : f"It can be done in two ways. We can remove first {num_02} numbers beginning from 1 or last {num_02} numbers ending with {num_01}.",      
+                        "commentary" : f"It can be done in two ways. We can remove first {num_02} numbers beginning from 1 or last {num_02} numbers ending with {num_01}.",
+                        "commentary_marathi" : f"It can be done in two ways. We can remove first {num_02} numbers beginning from 1 or last {num_02} numbers ending with {num_01}.हे 2 प्रकारे करता येते. आपण १ पासून सुरु करून पहिल्या {num_02} आकडे कमी करू शकतो किंवा {num_01} पाशी संपणारे शेवटचे {num_02} आकडे कमी करू शकतो.",      
+                          
                     }, 
                 6 : {
-                        "commentary" : f"Method 1 is removing {num_02} numbers beginning from 1",      
+                        "commentary" : f"Method 1 is removing {num_02} numbers beginning from 1", 
+                        "commentary_marathi" : f"Method 1 is removing {num_02} numbers beginning from 1.पद्धत 1 खाली दाखविल्या प्रमाणे १ पासून सुरु करून पहिल्या {num_02} संख्या काढून टाकणे",     
                     },
                 7 : {
-                        "commentary" : f"We have removed first {num_02} numbers. That is {','.join([str(num) for num in range(1,int(num_02))])+ ' and ' + str(num_02)} "
+                        "commentary" : f"We have removed first {num_02} numbers. That is {','.join([str(num) for num in range(1,int(num_02))])+ ' and ' + str(num_02)}.",
+                        "commentary_marathi" : f"We have removed first {num_02} numbers. That is {','.join([str(num) for num in range(1,int(num_02))])+ ' and ' + str(num_02)}.आपण {','.join([str(num) for num in range(1,int(num_02))])+ ' आणि ' + str(num_02)} असे पहिल्या {num_02} संख्या काढून टाकल्या आहेत "
+                    
                     },
                 8 : {
-                        "commentary" : f"Now remaining numbers are "
+                        "commentary" : f"Now remaining numbers are ",
+                        "commentary_marathi" : f"Now remaining numbers are.आता उरलेले आकडे असे आहेत."
                     },
                 9 : {
-                        "commentary" : f"Let us count the remaining numbers as"
+                        "commentary" : f"Let us count the remaining numbers as",
+                        "commentary_marathi" : f"Let us count the remaining numbers as,आता आपण उरलेल्या संख्या मोजुया"
                     },
                 10 : {
-                        "commentary" : f"So, from {int(num_02)+1} to {num_01} we can see that {answer} numbers are remaining and we get the answer as {answer} and is written as {num_01} minus {num_02} equals {answer}"
+                        "commentary" : f"So, from {int(num_02)+1} to {num_01} we can see that {answer} numbers are remaining and we get the answer as {answer} and is written as {num_01} minus {num_02} equals {answer}",
+                        "commentary_marathi" : f"So, from {int(num_02)+1} to {num_01} we can see that {answer} numbers are remaining and we get the answer as {answer} and is written as {num_01} minus {num_02} equals {answer}.म्हणजेच {int(num_02)+1} ते {num_01} अशा {answer} संख्या शिल्लक आहेत.म्हणजेच आपल्याला {answer} असे उत्तर मिळाले आणि ते {num_01}-{num_02}={answer} असे लिहिले जाते." 
                     },  
                 11 : {
-                        "commentary" : f"Method 2 is {num_01} numbers which we have, are 1 to {num_01} as {', '.join([str(num) for num in range(1, int(num_01))]) + ' and ' + str(num_01)} and last {num_02} numbers are removed ending with {num_01}"
+                        "commentary" : f"Method 2 is {num_01} numbers which we have, are 1 to {num_01} as {', '.join([str(num) for num in range(1, int(num_01))]) + ' and ' + str(num_01)} and last {num_02} numbers are removed ending with {num_01}",
+                        "commentary_marathi" : f"Method 2 is {num_01} numbers which we have, are 1 to {num_01} as {', '.join([str(num) for num in range(1, int(num_01))]) + ' and ' + str(num_01)} and last {num_02} numbers are removed ending with {num_01}.पद्धत 2,आपल्याकडे ज्या {num_01} संख्या आहेत त्या पुढील प्रमाणे 1 ते {num_01} अशा आहेत {', '.join([str(num) for num in range(1, int(num_01))]) + ' आणि ' + str(num_01)} आणि {num_01} पाशी संपणाऱ्या शेवटच्या {num_02} संख्या खाली दाखविल्या प्रमाणे काढून टाकायच्या आहेत "
+                   
                     }, 
                 12 : {
-                        "commentary" : f"Then remaining numbers are {','.join([str(num) for num in range(1,int(answer))])+ ' and ' + str(answer)}"
+                        "commentary" : f"Then remaining numbers are {','.join([str(num) for num in range(1,int(answer))])+ ' and ' + str(answer)}",
+                        "commentary_marathi" : f"Then remaining numbers are {','.join([str(num) for num in range(1,int(answer))])+ ' and ' + str(answer)}.आता उरलेल्या संख्या {','.join([str(num) for num in range(1,int(answer))])+ ' आणि ' + str(answer)} या आहेत."
                     }, 
                 13 : {
-                        "commentary" : f"Now we will count the remaining numbers"
+                        "commentary" : f"Now we will count the remaining numbers",
+                        "commentary_marathi" : f"Now we will count the remaining numbers.आपण उरलेल्या संख्या मोजू."
                     }, 
                 14 : {
-                        "commentary" : f"We can very easily see that 1 to {answer} are {answer} numbers remaining "
+                        "commentary" : f"We can very easily see that 1 to {answer} are {answer} numbers remaining ",
+                        "commentary_marathi" : f"We can very easily see that 1 to {answer} are {answer} numbers remaining.आपल्याला हे सहजरित्या कळू शकते की 1 ते {answer} या {answer} संख्या आहेत"
                     },
                 15 : {
-                        "commentary" : f"We get the answer as {answer} and is written as {num_01} minus {num_02} = {answer} "
+                        "commentary" : f"We get the answer as {answer} and is written as {num_01} minus {num_02} = {answer} ",
+                        "commentary_marathi" : f"We get the answer as {answer} and is written as {num_01} minus {num_02} = {answer}.आपल्याला {answer} असे उत्तर मिळते आणि ते आपण {num_01} - {num_02} = {answer} असे लिहितो."
                     },                                                                    
             }  
 
