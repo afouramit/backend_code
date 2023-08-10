@@ -121,13 +121,13 @@ def create_image(number_list, subject_list, question_operator, question_statemen
     title_font = ImageFont.truetype('myapp/font/Roman Regular.ttf', 60)
     image_editable.text((50, 50), question_statement, (0, 0, 0), font=title_font)
     ts = time.time()
-    dt = datetime.datetime.fromtimestamp(ts).strftime('%Y-%m-%d %H:%M:%S')
-    question_image.save("myapp/questions/question" + dt + ".jpg", "JPEG")
+    dt = datetime.datetime.fromtimestamp(ts).strftime('%Y-%m-%d %H-%M-%S')
+    question_image.save("myapp/questions/question" + dt+ ".jpg", "JPEG")
     return dt
 
 
 def get_question_from_image(question_image):
-    path_to_tesseract = r"/usr/local/bin/tesseract"
+    path_to_tesseract = r"C:\\Users\\Amit.K\\AppDataLocal\\Programs\\Tesseract-OCR"
 
     # Opening the image & storing it in an image object
     img = Image.open(question_image)
