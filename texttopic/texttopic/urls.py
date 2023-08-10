@@ -34,5 +34,6 @@ urlpatterns = [
     path('naming_figures_single_question/', views.naming_fig_single_ques),
     path('convert_text_to_text/', views.txt_to_txt),
     path('convert_text_to_speech/', views.text_to_speech),
+   path('get_q/', views.image_q),
 
 ]

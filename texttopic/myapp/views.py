@@ -1524,4 +1524,19 @@ def LCM_numbers(request):
             return JsonResponse(response_obj.__dict__, status=400)
     except KeyError as e:
             response_obj = ResponseClass(400, "no field called list")
+            return JsonResponse(response_obj.__dict__, status=400)
+
+
+@api_view(['GET'])
+def image_q(request):
+    try:
+        question_type = request.META.get('HTTP_TYPE')
+        num1 = request.META.get('HTTP_NUM1')
+        num2= request.META.get('HTTP_NUM2')
+        img = text_to_picture.convert_q_pic([num1,num2],question_type)
+        return img
+    except KeyError as e:
+            response_obj = ResponseClass(400, "no field called question_type and numbers")
+            return JsonResponse(response_obj.__dict__, status=400)
             return JsonResponse(response_obj.__dict__, status=400)                     
+

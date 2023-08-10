@@ -84,7 +84,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'texttopic',
         'USER': 'postgres',
-        'PASSWORD': 'Gecamit@2021',
+        'PASSWORD': 'root',
         'HOST': 'localhost'
     }
 }
@@ -150,7 +150,9 @@ CORS_ALLOW_HEADERS = [
     'list',
     'lang',
     'text',
-    'version'
+    'version',
+    'num1',
+    'num2'
     
 ]
 
