@@ -6,5 +6,7 @@ webdriver-manager
 PILLOW
 pytesseract
 django-cors-headers
+django-cors-headers
 googletrans-3.1.0a0
 gTTS
+
